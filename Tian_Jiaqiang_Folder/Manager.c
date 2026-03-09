@@ -1,4 +1,38 @@
 #include "Manager.h"
+S_LIST server_head = NULL;
+O_LIST owner_head = NULL;
+void Save(S_LIST server_head,O_LIST owner_head){
+    FILE *fp;
+    fp=fopen(FILENAME,"w");
+    if(fp==NULL){
+        printf("文件打开遇到错误！\n");
+        return;
+    }
+    fputs("业务管理系统\n",fp);
+    S_LIST S_node=server_head;
+    if(server_head!=NULL){
+        while(S_node!=NULL){
+            fprintf(fp,"职位：业务管理人员     姓名：%s    年龄：%d    家庭住址：%d楼    密码：%lld     停车位占用情况：%d   工作：%s",
+            S_node->server.base.M_name,S_node->server.base.M_age,S_node->server.base.M_area,S_node->server.base.password,S_node->server.base.parking_imfor,
+            S_node->server.Career);
+            for(int i=0;i<S_node->server.Areacount;i++){
+                fprintf(fp,"    负责区域：%d楼 ",S_node->server.Area[i]);
+            }
+            S_node=S_node->next;
+        }
+    }
+    O_LIST O_node=owner_head;
+    if(owner_head!=NULL){
+        while(O_node!=NULL){
+            fprintf(fp,"职位：业主     姓名：%s    年龄：%d    家庭住址：%d楼    密码：%lld     停车位占用情况：%d   ",
+            O_node->owner.base.M_name,O_node->owner.base.M_age,O_node->owner.base.M_area,O_node->owner.base.password,O_node->owner.base.parking_imfor);
+            O_node=O_node->next;
+        }
+    }
+    fclose(fp);
+    fp=NULL;
+    return;
+}
 void ShowMenu(){
     printf("请选择您的身份\n");
     printf("1.管理员 2.物业服务人员 3.业主\n");
@@ -45,7 +79,7 @@ void AddImfor(Person* person,Server* server,Owner* owner){
     printf("姓名：\n");
     scanf("%s",name);
     printf("年龄：\n");
-    scanf("%d",age);
+    scanf("%d",&age);
     printf("性别：1.man 2.woman\n");
     int SEX_choice;
     A:scanf("%d",&SEX_choice);
@@ -69,7 +103,7 @@ void AddImfor(Person* person,Server* server,Owner* owner){
     printf("请输入ta的职位\n");
     printf("1.业务服务人员 2.业主");
     int choice;
-    scanf("%d",&choice);
+    B:scanf("%d",&choice);
     switch(choice){
         case 1:
             strcpy(person->Position,"Server");
@@ -101,6 +135,7 @@ void AddImfor(Person* person,Server* server,Owner* owner){
                 server->Area[count]=num;
                 count++;
             }
+            server->Areacount=count;
             server_head=SERVER_LISTADD(server,server_head);
             break;
         case 2:
@@ -109,6 +144,106 @@ void AddImfor(Person* person,Server* server,Owner* owner){
             /*此处业主缴费信息等等待后续补充*/
             owner_head=OWNER_ADDLIST(owner,owner_head);
             break;
+        default:
+            printf("请输入正确的数字！");
+            goto B;
+            break;
     }
-
+    Save(server_head,owner_head);
+}
+S_LIST SERVER_DelImfor(S_LIST server_head){
+    if(server_head==NULL){
+        printf("空链表！");
+        return server_head;
+    }
+    printf("请输入你要删除的对象姓名：");
+    char delname[MAX];
+    scanf("%s",delname);
+    S_LIST node=server_head;
+    if(node->next==NULL&&strcmp(node->server.base.M_name,delname)!=0){//整个链表只有一个成员且不匹配
+        printf("找不到该对象！\n");
+        return server_head;
+    }
+    if(strcmp(node->server.base.M_name,delname)==0){//第一个成员要被删除
+        if(node->next==NULL){//整个链表只有一个成员
+            free(server_head); 
+            server_head = NULL; // 头指针置空
+            printf("删除%s对象成功！\n",delname);
+            Save(server_head,owner_head);
+            return server_head;
+        }
+        server_head=node->next;
+        free(node);
+        node=NULL;
+        printf("删除%s对象成功！\n",delname);
+        Save(server_head,owner_head);
+        return server_head;
+    }
+    while(node->next!=NULL){
+        if(strcmp(node->next->server.base.M_name, delname) == 0){
+            S_LIST Delnode=node->next;
+            node->next=node->next->next;
+            free(Delnode);
+            Delnode=NULL;
+            printf("删除%s对象成功！\n",delname);
+            Save(server_head,owner_head);
+            return server_head;
+        }
+        if (node->next->next == NULL && strcmp(node->next->server.base.M_name, delname) != 0) {
+            printf("找不到该对象！\n");
+            return server_head;  
+        }
+        node=node->next;
+    }
+    printf("找不到该对象！\n");
+    Save(server_head,owner_head);
+    return server_head;
+}
+O_LIST OWNER_DelImfor(O_LIST owner_head){
+    if(owner_head==NULL){
+        printf("空链表！");
+        return owner_head;
+    }
+    printf("请输入你要删除的对象姓名：");
+    char delname[MAX];
+    scanf("%s",delname);
+    O_LIST node=owner_head;
+    if(node->next==NULL&&strcmp(node->owner.base.M_name,delname)!=0){//整个链表只有一个成员且不匹配
+        printf("找不到该对象！\n");
+        return owner_head;
+    }
+    if(strcmp(node->owner.base.M_name,delname)==0){//第一个成员要被删除
+        if(node->next==NULL){//整个链表只有一个成员
+            free(owner_head); 
+            owner_head = NULL; // 头指针置空
+            printf("删除%s对象成功！\n",delname);
+            Save(server_head,owner_head);
+            return owner_head;
+        }
+        owner_head=node->next;
+        free(node);
+        node=NULL;
+        printf("删除%s对象成功！\n",delname);
+        Save(server_head,owner_head);
+        return owner_head;
+    }
+    while(node->next!=NULL){
+        if(strcmp(node->next->owner.base.M_name, delname) == 0){
+            O_LIST Delnode=node->next;
+            node->next=node->next->next;
+            free(Delnode);
+            Delnode=NULL;
+            printf("删除%s对象成功！\n",delname);
+            Save(server_head,owner_head);
+            return owner_head;
+        }
+        if (node->next->next == NULL && strcmp(node->next->owner.base.M_name, delname) != 0) {
+            printf("找不到该对象！\n");
+            return owner_head;  
+        }
+        node=node->next;
+    }
+    printf("找不到该对象！\n");
+    Save(server_head,owner_head);
+    return owner_head;
 }
