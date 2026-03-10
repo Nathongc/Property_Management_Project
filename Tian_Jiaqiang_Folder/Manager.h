@@ -12,6 +12,7 @@ typedef struct Owner_List* O_LIST;
 typedef struct ChargeImfor ChargeImfor;
 extern S_LIST server_head;
 extern O_LIST owner_head;
+extern Imfor* imfor;
 // 链表头指针
 
 void ShowMenu();
@@ -25,8 +26,8 @@ struct Person{//通用
     int parking_imfor;//停车位占用情况
 };
 struct ChargeImfor{//业主缴费信息
-    int num;//次数
-    int date[2200][13][32];//日期
+    int Charge_num;//次数
+    int Date[MAX][3];//日期:年月日
 };
 struct Owner{//业主
     Person base;//基本信息
@@ -48,15 +49,16 @@ struct Server_List{
 };
 struct Imformation{
     int Building[MAX];//楼宇
-    int parking[MAX][1];//停车位，0为空闲，1为占用
-    int charging_fee;//收费标准
+    int Num_parking;//停车位数量
+    int parking[MAX];//停车位，0为空闲，1为占用,-1为关闭
+    int charging_fee;//收费金额
     int charging_date;//收费周期
 };
-void Save(S_LIST server_head,O_LIST owner_head);//存入文件
-void AddImfor(Person* person,Server* server,Owner* owner);//添加人员信xi
-void ModImfor();//更改人员信息
+void Save(S_LIST server_head,O_LIST owner_head);//存入文件、
+void Read(S_LIST server_head,O_LIST owner_head);//读取文件
+void AddImfor();//添加人员信xi
+Imfor ModImfor(O_LIST owner_head,S_LIST server_head);//更改人员信息
 S_LIST SERVER_LISTADD(Server* server,S_LIST server_head);//把服务人员信息加入链表
 O_LIST OWNER_ADDLIST(Owner* M_owner,O_LIST owner_head);//把业主信息加入链表
 S_LIST SERVER_DelImfor(S_LIST server_head);//删除物业管理人员信息
 O_LIST OWNER_DelImfor(O_LIST owner_head);//删除业主信息
-void ShowServer_Imfor(S_LIST server_head);//测试用代码，已删除

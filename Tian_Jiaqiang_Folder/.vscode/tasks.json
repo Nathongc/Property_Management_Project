@@ -1,0 +1,28 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Build with GCC",
+            "command": "D:\\mingw\\mingw64\\bin\\gcc.exe",
+            "args": [
+                "-g",
+                "main.c",
+                "Manager.c",
+                "-o",
+                "main.exe"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "编译 main.c 和 Manager.c 生成 main.exe"
+        }
+    ]
+}
