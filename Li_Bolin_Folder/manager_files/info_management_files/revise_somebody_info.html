@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>修改人员信息</title>
+    <style>
+        body { 
+            font-family: 'Arial', sans-serif; 
+            padding: 20px; 
+            background: #f0f2f5; 
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header_size {
+            font-size: 36px;
+            font-weight: 700;
+            text-align: center;
+            color: #8e44ad; /* 紫色强调修改功能 */
+            margin-bottom: 20px;
+        }
+        .search-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px 14px;
+            font-size: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus {
+            border-color: #8e44ad;
+            outline: none;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 10px;
+        }
+        .button_size {
+            font-size: 17px;
+            font-weight: 600;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .search-btn {
+            background: #3498db;
+            color: white;
+        }
+        .save-btn {
+            background: #8e44ad;
+            color: white;
+        }
+        .save-btn:hover {
+            background: #7d3c98;
+            transform: translateY(-2px);
+        }
+        .back-btn {
+            background: #95a5a6;
+            color: white;
+        }
+        .status {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+        .required {
+            color: #e74c3c;
+        }
+        .result-item {
+            background: #f1f2f7;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 12px 0;
+            border-left: 3px solid #8e44ad;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .edit-btn {
+            background: #8e44ad;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header_size">✏️ 修 改 人 员 信 息</div>
+        
+        <!-- 查询区域 -->
+        <div class="search-section">
+            <h3 style="margin-top:0; color:#2c3e50;">🔍 查询要修改的人员</h3>
+            
+            <div class="form-group">
+                <label for="searchName">👤 姓名 <span class="required">*</span></label>
+                <input type="text" id="searchName" required placeholder="例如：张三">
+            </div>
+            
+            <div class="form-group">
+                <label for="searchPhone">📱 电话号码</label>
+                <input type="text" id="searchPhone" placeholder="例如：13800138000">
+            </div>
+            
+            <div style="text-align:center; margin-top:15px;">
+                <button onclick="searchUser()" class="button_size search-btn">🔎 查询人员</button>
+            </div>
+        </div>
+        
+        <!-- 查询结果区域 -->
+        <div id="resultsSection" style="display:none;">
+            <h3 style="color:#2c3e50; margin-bottom:15px;">📋 匹配结果：</h3>
+            <div id="resultsList"></div>
+        </div>
+        
+        <!-- 编辑表单区域（初始隐藏） -->
+        <div id="editFormSection" style="display:none;">
+            <h3 style="color:#2c3e50; margin-bottom:15px;">✏️ 编辑信息：</h3>
+            <form id="editForm">
+                <!-- 职位，姓名，年龄，性别，家庭住址，密码，停车位占用情况，工作负责区域，缴费情况，电话 -->
+                <div class="form-group">
+                    <label for="occupation">职位 <span class="required">*</span></label>
+                    <select id="occupation" required>
+                        <option value="">-- 请选择 --</option>
+                        <option value="业主">业主</option>
+                        <option value="保洁">保洁</option>
+                        <option value="管理人员">管理人员</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="name">姓名 <span class="required">*</span></label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="age">年龄 <span class="required">*</span></label>
+                    <input type="text" id="age" required>
+                </div>
+                <div class="form-group">
+                    <label for="gender">性别 <span class="required">*</span></label>
+                    <select id="gender" required>
+                        <option value="">-- 请选择 --</option>
+                        <option value="男">男</option>
+                        <option value="女">女</option>
+                        <option value="跨性别">跨性别</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="room">房间号 <span class="required">*</span></label>
+                    <input type="text" id="room" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">密码 <span class="required">*</span></label>
+                    <input type="text" id="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="park_status">停车位占用情况 <span class="required">*</span></label>
+                    <input type="text" id="park_status" required>
+                </div>
+                <div class="form-group">
+                    <label for="work_space">工作负责区域 <span class="required">*</span></label>
+                    <input type="text" id="work_space" required>
+                </div>
+                <div class="form-group">
+                    <label for="status">缴费状态 <span class="required">*</span></label>
+                    <select id="status" required>
+                        <option value="">-- 请选择 --</option>
+                        <option value="已缴费">已缴费</option>
+                        <option value="未缴费">未缴费</option>
+                        <option value="部分缴费">部分缴费</option>
+                        <option value="无需缴费">无需缴费</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="phone">联系电话</label>
+                    <input type="tel" id="phone">
+                </div>
+                
+                <div class="button-group">
+                    <button type="button" onclick="cancelEdit()" class="button_size back-btn">⬅️ 取消</button>
+                    <button type="button" onclick="submitEdit()" class="button_size save-btn">💾 保存修改</button>
+                </div>
+            </form>
+        </div>
+        
+        <div style="text-align:center; margin-top:20px;">
+            <button onclick="go_back()" class="button_size back-btn">🏠 返回主菜单</button>
+        </div>
+        
+        <div id="statusMessage" class="status"></div>
+    </div>
+
+    <script>
+        let originalLine = null; // 存储原始行数据（用于后端识别）
+        
+        function searchUser() {
+            const name = document.getElementById('searchName').value.trim();
+            const phone = document.getElementById('searchPhone').value.trim();
+            
+            if (!name) {
+                showStatus('⚠️ 姓名是必填项！', 'error');
+                return;
+            }
+            
+            const params = new URLSearchParams();
+            params.append('name', name);
+            if (phone) params.append('phone', phone);
+            
+            showStatus('🔍 正在查询...', 'success');
+            
+            fetch(`/api/user?${params.toString()}`)
+                .then(response => response.text())
+                .then(data => {
+                    const lines = data.trim().split('\n').filter(line => line.trim() !== '');
+                    
+                    const resultsList = document.getElementById('resultsList');
+                    resultsList.innerHTML = '';
+                    
+                    if (lines.length === 0) {
+                        showStatus('❌ 未找到匹配的人员', 'error');
+                        document.getElementById('resultsSection').style.display = 'none';
+                    } 
+                    else if (lines.length === 1) {
+                        // 直接进入编辑模式
+                        loadEditForm(lines[0]);
+                    } 
+                    else {
+                        // 显示多结果列表
+                        document.getElementById('resultsSection').style.display = 'block';
+                        lines.forEach(line => {
+                            const item = document.createElement('div');
+                            item.className = 'result-item';
+                            item.innerHTML = `
+                                <span>${line}</span>
+                                <button onclick="loadEditForm('${line.replace(/'/g, "\\'")}')"
+                                        class="edit-btn">✏️ 编辑</button>
+                            `;
+                            resultsList.appendChild(item);
+                        });
+                        showStatus(`✅ 找到 ${lines.length} 位同名人员，请选择要修改的`, 'success');
+                    }
+                })
+                .catch(error => {
+                    showStatus(`❌ 查询失败: ${error.message}`, 'error');
+                });
+        }
+        
+        function loadEditForm(line) {
+            originalLine = line;
+            const fields = line.split(',');
+            
+            // 填充表单（按你的字段顺序）
+            document.getElementById('occupation').value = fields[0] || '';
+            document.getElementById('name').value = fields[1] || '';
+            document.getElementById('age').value = fields[2] || '';
+            document.getElementById('gender').value = fields[3] || '';
+            document.getElementById('room').value = fields[4] || '';
+            document.getElementById('password').value = fields[5] || '';
+            document.getElementById('park_status').value = fields[6] || '';
+            document.getElementById('work_space').value = fields[7] || '';
+            document.getElementById('status').value = fields[8] || '';
+            document.getElementById('phone').value = fields[9] || '';
+            
+            // 隐藏查询和结果区域，显示编辑表单
+            document.getElementById('resultsSection').style.display = 'none';
+            document.getElementById('editFormSection').style.display = 'block';
+            showStatus('✏️ 请修改信息后点击保存', 'success');
+        }
+        
+        function submitEdit() {
+            // 获取所有字段值
+            const occupation = document.getElementById('occupation').value.trim();
+            const name = document.getElementById('name').value.trim();
+            const age = document.getElementById('age').value.trim();
+            const gender = document.getElementById('gender').value.trim();
+            const room = document.getElementById('room').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const park_status = document.getElementById('park_status').value.trim();
+            const work_space = document.getElementById('work_space').value.trim();
+            const status = document.getElementById('status').value;
+            const phone = document.getElementById('phone').value.trim();
+            
+            // 必填验证
+            if (!occupation || !name || !age || !gender || !room || !password || !park_status || !work_space || !status) {
+                showStatus('⚠️ 请填写所有必填项！', 'error');
+                return;
+            }
+            
+            // 构建新数据行
+            const newData = `${occupation},${name},${age},${gender},${room},${password},${park_status},${work_space},${status},${phone}`;
+            
+            showStatus('💾 正在保存修改...', 'success');
+            
+            // 发送修改请求（后端需实现 /api/update 接口）
+            fetch('/api/update', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8'
+                },
+                body: JSON.stringify({
+                    original: originalLine,
+                    updated: newData
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    showStatus('✅ 修改成功！', 'success');
+                    // 3秒后返回查询界面
+                    setTimeout(() => {
+                        cancelEdit();
+                        document.getElementById('searchName').value = '';
+                        document.getElementById('searchPhone').value = '';
+                    }, 3000);
+                } else {
+                    throw new Error('保存失败');
+                }
+            })
+            .catch(error => {
+                showStatus(`❌ 保存失败: ${error.message}`, 'error');
+            });
+        }
+        
+        function cancelEdit() {
+            document.getElementById('editFormSection').style.display = 'none';
+            document.getElementById('resultsSection').style.display = 'none';
+            originalLine = null;
+        }
+        
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+        }
+        
+        function go_back() {
+            window.location.href = '../info_management.html';
+        }
+        
+        // 支持回车查询
+        document.getElementById('searchName').addEventListener('keypress', e => {
+            if (e.key === 'Enter') searchUser();
+        });
+        document.getElementById('searchPhone').addEventListener('keypress', e => {
+            if (e.key === 'Enter') searchUser();
+        });
+    </script>
+</body>
+</html>
