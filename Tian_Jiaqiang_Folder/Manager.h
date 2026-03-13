@@ -9,7 +9,6 @@ extern Imfor* imfor;//无机物信息
 extern Person* head;// 链表头指针
 
 
-void ShowMenu();
 struct Person {//人
     long long password;//密码
     long long M_phone_num;//电话号
@@ -32,14 +31,15 @@ struct Imformation {//无机物信息
     int charging_fee;//收费金额
     int charging_date;//收费周期
 };
+void Show_Imfor(Person* head, Imfor* imfor);
 void Save(Person* head);//存入文件
 void Imfor_Read();//读取文件中的imfor信息
 void AddImfor();//添加人员信xi
-Imfor* Init_imfor(Imfor* imfor); //初始化imfor对象//初始化imfor对象
-void Init_Person(Person* person);//初始化人
-Person* ADD_TO_LIST(Person* head,Person* person);//加入链表
+Imfor* Init_imfor(Imfor* imfor); //初始化imfor对象
+Person* Init_Person(Person* person);//初始化人
+Person* ADD_TO_LIST(Person* head, Person* person);//加入链表
 Person* Delimfor(Person* head);//从链表中删除对象
-Imfor ModImfor(Person* head,Imfor* imfor);//更改信息
-Person* Mod_Person();//更改人员
+Person* ModImfor(Person* head, Imfor* imfor);//更改信息
+Person* Mod_Person(Person* person);//更改人员
 
 

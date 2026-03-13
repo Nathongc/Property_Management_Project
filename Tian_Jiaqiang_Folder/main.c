@@ -1,12 +1,39 @@
 #include "Manager.h"
 int main() {
-    int res = Init_imfor();
-    if (res == -1) {
-        printf("系统异常！\n");
-        exit(1);
-    }
+    imfor = Init_imfor(imfor);
     Imfor_Read();
-    Person* person = (Person*)malloc(sizeof(Person));
-    AddImfor();
+    while (1) {
+        printf("您以获得管理员权限！1.展示2.添加3.删除4.修改5.退出\n");
+        int choice;
+        scanf("%d", &choice);
+        switch (choice) {
+        case 1:
+            Show_Imfor(head, imfor);
+            system("pause");
+            system("cls");
+            break;
+        case 2:
+            AddImfor();
+            system("pause");
+            system("cls");
+            break;
+        case 3:
+            head = Delimfor(head);
+            system("pause");
+            system("cls");
+            break;
+        case 4:
+            head = ModImfor(head, imfor);
+            system("pause");
+            system("cls");
+            break;
+        case 5:
+            Save(head);
+            exit(0);
+            break;
+        default:
+            break;
+        }
+    }
     return 0;
 }
