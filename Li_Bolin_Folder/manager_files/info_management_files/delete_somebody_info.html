@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>删除人员信息</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+        .middle { text-align: center; }
+        .input-group {
+            margin: 15px 0;
+            display: inline-block;
+            text-align: left;
+            width: 320px;
+        }
+        .input-label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .input-box { 
+            padding: 12px; 
+            font-size: 18px; 
+            width: 100%; 
+            border: 2px solid #3498db;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        .button_size {
+            font-size: 20px;
+            font-weight: 500;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 8px;
+        }
+        .search-btn {
+            background: #3498db;
+            color: white;
+        }
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
+            font-size: 16px;
+            padding: 8px 16px;
+            margin-left: 10px;
+        }
+        .result { 
+            margin-top: 25px; 
+            background: white; 
+            padding: 20px; 
+            border-radius: 8px;
+            min-height: 100px;
+            text-align: left;
+        }
+        .header_size{
+            font-size: 42px;
+            font-weight: 700;
+            color: #e74c3c; /* 红色强调删除功能 */
+        }
+        .tip {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-top: 8px;
+            font-style: italic;
+        }
+        .result-item {
+            background: #fef9f9;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 10px 0;
+            border-left: 3px solid #e74c3c;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 450px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .modal-buttons {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .modal-btn {
+            padding: 10px 25px;
+            font-size: 16px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .confirm-btn { background: #c0392b; color: white; }
+        .cancel-btn { background: #95a5a6; color: white; }
+    </style>
+</head>
+<body>
+    <div class="middle">
+        <div class="header_size">🗑️ 删 除 人 员 信 息</div>
+        
+        <div class="input-group">
+            <span class="input-label">👤 姓名</span>
+            <input type="text" id="nameInput" class="input-box" placeholder="例如：张三">
+            <div class="tip">可单独查询，但重名时会列出多人供选择</div>
+        </div>
+        
+        <div class="input-group">
+            <span class="input-label">📱 电话号码</span>
+            <input type="text" id="phoneInput" class="input-box" placeholder="例如：13800138000">
+            <div class="tip">配合姓名可精准定位重名人员</div>
+        </div>
+        
+        <div style="margin:20px 0;">
+            <button onclick="searchUser()" class="button_size search-btn">🔎 查询可删除人员</button>
+            <button onclick="go_back()" class="button_size search-btn">⬅️ 返回</button>
+        </div>
+        
+        <div id="result" class="result">请输入姓名或电话查询要删除的人员</div>
+    </div>
+
+    <!-- 删除确认弹窗 -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <h2 style="color:#c0392b; margin-bottom:15px;">⚠️ 确认删除</h2>
+            <p id="confirmText" style="font-size:18px; line-height:1.5; margin-bottom:20px;">
+                确定要永久删除此人员信息吗？<br>
+                <span id="deleteTarget" style="color:#e74c3c; font-weight:bold; display:block; margin:10px 0;"></span>
+                <span style="color:#7f8c8d; font-size:14px;">⚠️ 此操作不可撤销！</span>
+            </p>
+            <div class="modal-buttons">
+                <button onclick="cancelDelete()" class="modal-btn cancel-btn">❌ 取消</button>
+                <button onclick="confirmDelete()" class="modal-btn confirm-btn">✅ 确认删除</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let pendingDeleteLine = null; // 待删除的完整行数据
+        
+        function searchUser() {
+            const name = document.getElementById('nameInput').value.trim();
+            const phone = document.getElementById('phoneInput').value.trim();
+            
+            // 至少填一项
+            if (!name && !phone) {
+                alert('⚠️ 请至少填写姓名或电话号码！');
+                return;
+            }
+            
+            // 构建带双参数的 URL
+            const params = new URLSearchParams();
+            if (name) params.append('name', name);
+            if (phone) params.append('phone', phone);
+            
+            const url = `/api/user?${params.toString()}`;
+            
+            document.getElementById('result').innerHTML = '🔍 正在查询...';
+            
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) throw new Error('查询失败');
+                    return response.text();
+                })
+                .then(data => {
+                    const lines = data.trim().split('\n').filter(line => line.trim() !== '');
+                    
+                    if (lines.length === 0) {
+                        document.getElementById('result').innerHTML = 
+                            '<p style="color:#e74c3c; font-size:18px;">❌ 未找到匹配的人员</p>';
+                    } 
+                    else if (lines.length === 1) {
+                        // 单一结果：显示删除按钮
+                        document.getElementById('result').innerHTML = `
+                            <p style="color:#27ae60; font-weight:bold; margin-bottom:15px;">✅ 找到 1 位匹配人员：</p>
+                            <div class="result-item">
+                                <span>${lines[0]}</span>
+                                <button onclick="showConfirmModal('${lines[0].replace(/'/g, "\\'")}')"
+                                        class="button_size delete-btn">🗑️ 删除</button>
+                            </div>
+                        `;
+                    } 
+                    else {
+                        // 多个结果：列表展示 + 每行删除按钮
+                        let html = `<p style="color:#f39c12; font-weight:bold; margin-bottom:15px;">
+                            ⚠️ 找到 ${lines.length} 位同名人员，请确认要删除哪位：
+                        </p>`;
+                        
+                        lines.forEach(line => {
+                            html += `
+                                <div class="result-item">
+                                    <span>${line}</span>
+                                    <button onclick="showConfirmModal('${line.replace(/'/g, "\\'")}')"
+                                            class="button_size delete-btn">🗑️ 删除</button>
+                                </div>`;
+                        });
+                        
+                        html += `<p style="color:#7f8c8d; font-style:italic; margin-top:15px;">
+                            💡 提示：补充电话号码可缩小查询范围，精准定位目标人员
+                        </p>`;
+                        
+                        document.getElementById('result').innerHTML = html;
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('result').innerHTML = 
+                        '<img src="../crying.png" height="300"><br>' +
+                        '<p style="color:red; font-size:18px; margin-top:15px;">❌ 查询错误: ' + error.message + '</p>';
+                });
+        }
+        
+        function showConfirmModal(line) {
+            pendingDeleteLine = line;
+            document.getElementById('deleteTarget').textContent = line;
+            document.getElementById('confirmModal').style.display = 'flex';
+        }
+        
+        function cancelDelete() {
+            pendingDeleteLine = null;
+            document.getElementById('confirmModal').style.display = 'none';
+        }
+        
+        function confirmDelete() {
+            if (!pendingDeleteLine) return;
+            
+            // 发送删除请求到后端
+            fetch('/api/delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain; charset=utf-8'
+                },
+                body: pendingDeleteLine
+            })
+            .then(response => {
+                document.getElementById('confirmModal').style.display = 'none';
+                
+                if (response.ok) {
+                    document.getElementById('result').innerHTML = 
+                        '<p style="color:#27ae60; font-size:20px; font-weight:bold;">✅ 删除成功！</p>' +
+                        '<p style="color:#7f8c8d; margin-top:10px;">人员信息已从系统中移除</p>';
+                    
+                    // 清空输入框
+                    document.getElementById('nameInput').value = '';
+                    document.getElementById('phoneInput').value = '';
+                } else {
+                    throw new Error('服务器返回删除失败');
+                }
+            })
+            .catch(error => {
+                document.getElementById('confirmModal').style.display = 'none';
+                document.getElementById('result').innerHTML = 
+                    '<p style="color:#e74c3c; font-size:18px;">❌ 删除失败: ' + error.message + '</p>';
+            });
+        }
+        
+        function go_back() {
+            window.location.href = '../info_management.html';
+        }
+        
+        // 支持回车键查询
+        document.getElementById('nameInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') searchUser();
+        });
+        document.getElementById('phoneInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') searchUser();
+        });
+        
+        // 点击遮罩关闭弹窗
+        document.getElementById('confirmModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('confirmModal')) {
+                cancelDelete();
+            }
+        });
+    </script>
+</body>
+</html>

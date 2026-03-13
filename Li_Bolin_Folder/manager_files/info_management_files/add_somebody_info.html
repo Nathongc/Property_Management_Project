@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>新增业主信息</title>
+    <style>
+        body { 
+            font-family: 'Arial', sans-serif; 
+            padding: 20px; 
+            background: #f0f2f5; 
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header_size {
+            font-size: 36px;
+            font-weight: 700;
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        .button_size {
+            font-size: 18px;
+            font-weight: 600;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .save-btn {
+            background: #2ecc71;
+            color: white;
+        }
+        .save-btn:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+        }
+        .back-btn {
+            background: #e74c3c;
+            color: white;
+        }
+        .back-btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+        .status {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+        .required {
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header_size">📝 新 增 人 员 信 息</div>
+        
+        <form id="addForm">
+            <!-- 职位，姓名，年龄，性别，家庭住址，密码，停车位占用情况，工作负责区域，缴费情况，电话 -->
+            <!-- 职位 -->
+            <div class="form-group">
+                <label for="occupation">职位 <span class="required">*</span></label>
+                <select id="occupation" required>
+                    <option value="">-- 请选择 --</option>
+                    <option value="业主">业主</option>
+                    <option value="保洁">保洁</option>
+                    <option value="管理人员">管理人员</option>
+                </select>
+            </div>
+            <!-- 姓名 -->
+            <div class="form-group">
+                <label for="name">姓名 <span class="required">*</span></label>
+                <input type="text" id="name" required placeholder="例如：张三">
+            </div>
+            <!-- 年龄 -->
+            <div class="form-group">
+                <label for="age">年龄 <span class="required">*</span></label>
+                <input type="text" id="age" required placeholder="例如：20">
+            </div>
+            <!-- 性别 -->
+            <div class="form-group">
+                <label for="gender">性别 <span class="required">*</span></label>
+                <select id="gender" required>
+                    <option value="">-- 请选择 --</option>
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                    <option value="跨性别">跨性别</option>
+                </select>
+            </div>
+            <!-- 家庭住址 -->
+            <div class="form-group">
+                <label for="room">房间号 <span class="required">*</span></label>
+                <input type="text" id="room" required placeholder="例如：101室">
+            </div>
+            <!-- 密码 -->
+            <div class="form-group">
+                <label for="password">密码 <span class="required">*</span></label>
+                <input type="text" id="password" required placeholder="例如：19423657">
+            </div>
+            <!-- 停车位占用情况 -->
+            <div class="form-group">
+                <label for="park_status">停车位占用情况 <span class="required">*</span></label>
+                <input type="text" id="park_status" required placeholder="例如：3号楼停车场89号位">
+            </div>
+            <!-- 工作负责区域 -->
+            <div class="form-group">
+                <label for="work_space">工作负责区域 <span class="required">*</span></label>
+                <input type="text" id="work_space" required placeholder="例如：4号楼6楼">
+            </div>
+            <!-- 缴费状态 -->
+            <div class="form-group">
+                <label for="status">缴费状态 <span class="required">*</span></label>
+                <select id="status" required>
+                    <option value="">-- 请选择 --</option>
+                    <option value="已缴费">已缴费</option>
+                    <option value="未缴费" selected>未缴费</option>
+                    <option value="部分缴费">部分缴费</option>
+                    <option value="无需缴费">无需缴费</option>
+                </select>
+            </div>
+            <!-- 电话 -->
+            <div class="form-group">
+                <label for="phone">联系电话</label>
+                <input type="tel" id="phone" placeholder="例如：13800138000">
+            </div>
+            
+            <div class="button-group">
+                <button type="button" onclick="go_back()" class="button_size back-btn">⬅️ 取消</button>
+                <button type="button" onclick="submitForm()" class="button_size save-btn">✅ 保存业主</button>
+            </div>
+        </form>
+        
+        <div id="statusMessage" class="status"></div>
+    </div>
+
+    <script>
+        function submitForm() {
+            // 获取表单数据
+            // 职位，姓名，年龄，性别，家庭住址，密码，停车位占用情况，工作负责区域，缴费情况，电话
+            const occupation = document.getElementById('occupation').value.trim();
+            const name = document.getElementById('name').value.trim();
+            const age = document.getElementById('age').value.trim();
+            const gender = document.getElementById('gender').value.trim();
+            const room = document.getElementById('room').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const park_status = document.getElementById('park_status').value.trim();
+            const work_space = document.getElementById('work_space').value.trim();
+            const status = document.getElementById('status').value;
+            const phone = document.getElementById('phone').value.trim();
+            
+            // 基础验证
+            if (!name || !room || !status) {
+                showStatus('请填写所有必填项！', 'error');
+                return;
+            }
+            
+            // 构建数据行（逗号分隔）
+            const newData = `${occupation},${name},${age},${gender},${room},${password},${park_status},${work_space},${status},${phone}`;
+            
+            // 显示加载状态
+            showStatus('正在保存...', 'success');
+            
+            // 发送 POST 请求到后端
+            fetch('/api/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain; charset=utf-8'
+                },
+                body: newData
+            })
+            .then(response => {
+                if (response.ok) {
+                    showStatus('✅ 业主信息保存成功！', 'success');
+                    document.getElementById('addForm').reset(); // 清空表单
+                } else {
+                    throw new Error('保存失败，请重试');
+                }
+            })
+            .catch(error => {
+                showStatus(`❌ 保存失败: ${error.message}`, 'error');
+            });
+        }
+        
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+            
+            // 成功后3秒自动隐藏
+            if (type === 'success' && message.includes('成功')) {
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                }, 3000);
+            }
+        }
+        
+        function go_back() {
+            window.location.href = '../info_management.html';
+        }
+    </script>
+</body>
+</html>
