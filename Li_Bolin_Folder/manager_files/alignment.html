@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>按条件排序</title>
+        <style>
+            body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+            .middle { text-align: center; }
+            .control-panel {
+                margin: 20px auto;
+                padding: 16px;
+                background: white;
+                border-radius: 8px;
+                display: inline-block;
+            }
+            select, button {
+                padding: 10px 16px;
+                margin: 8px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+            button {
+                background: #3498db;
+                color: white;
+                cursor: pointer;
+            }
+            pre {
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                text-align: left;
+                overflow-x: auto;
+            }
+            .header_size { font-size: 40px; font-weight: 700; }
+        </style>
+    </head>
+    <body>
+        <div class="middle">
+            <div class="header_size">管 理 员 - 信 息 排 序 界 面</div>
+        
+            <div class="control-panel">
+                <label>选择排序字段：</label>
+                <select id="sortField">
+                    <option value="0">姓名</option>
+                    <option value="1">房间号</option>
+                    <option value="2">缴费状态</option>
+                    <option value="3">电话</option>
+                </select>
+            
+                <label>排序方式：</label>
+                <select id="sortOrder">
+                    <option value="asc">升序 (A→Z / 小→大)</option>
+                    <option value="desc">降序 (Z→A / 大→小)</option>
+                </select>
+            
+                <button onclick="loadAndSort()">🔄 加载并排序</button>
+                <button onclick="go_back()">返回上一界面</button>
+            </div>
+
+            <div id="result" style="margin-top: 20px;">
+                <pre id="sortedData">点击“加载并排序”查看结果</pre>
+            </div>
+        </div>
+
+        <script>
+            // 页面加载时自动加载数据（可选）
+            // window.onload = loadAndSort;
+
+            function loadAndSort() {
+                document.getElementById('sortedData').textContent = '正在加载...';
+            
+                // 1. 从后端获取原始数据
+                fetch('/api/all_info')
+                    .then(response => response.text())
+                    .then(rawData => {
+                        if (!rawData.trim()) {
+                            throw new Error('无数据');
+                        }
+                    
+                        // 2. 解析数据为数组
+                        const lines = rawData.trim().split('\n');
+                        const data = lines.map(line => line.split(','));
+                    
+                        // 3. 获取排序参数
+                        const fieldIndex = parseInt(document.getElementById('sortField').value);
+                        const order = document.getElementById('sortOrder').value;
+                    
+                        // 4. 执行排序
+                        data.sort((a, b) => {
+                            const valA = a[fieldIndex] || '';
+                            const valB = b[fieldIndex] || '';
+                        
+                            // 数字字段特殊处理（如房间号）
+                            if (fieldIndex === 1) { // 房间号
+                                const numA = extractRoomNumber(valA);
+                                const numB = extractRoomNumber(valB);
+                                return order === 'asc' ? numA - numB : numB - numA;
+                            }
+                        
+                            // 文本字段
+                            return order === 'asc' 
+                                ? valA.localeCompare(valB, 'zh-CN') // 支持中文排序
+                                : valB.localeCompare(valA, 'zh-CN');
+                        });
+                    
+                        // 5. 渲染结果
+                        const resultText = data.map(row => row.join(',')).join('\n');
+                        document.getElementById('sortedData').textContent = resultText;
+                    })
+                    .catch(error => {
+                        document.getElementById('sortedData').innerHTML = 
+                            '<img src="./crying.png" height="420"><br>' +
+                            '<span style="color:red;">❌ 错误: ' + error.message + '</span>';
+                    });
+            }
+
+            // 从 "101室" 提取数字 101
+            function extractRoomNumber(roomStr) {
+                const match = roomStr.match(/\d+/);
+                return match ? parseInt(match[0]) : 0;
+            }
+
+            function go_back(){
+                window.location.href = './manager.html';
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>物业管理系统</title>
+        <style>
+            .middle{
+                text-align: center;
+            }
+            .button_size{
+                font-size: 20px;
+                font-weight: 500;
+                padding: 12px 24px;
+            }
+            .header_size{
+                font-size: 50px;
+                font-weight: 700;
+            }
+            .small_text{
+                font-size: 25px;
+                font-weight: 700;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="middle">
+            <div class="header_size">管 理 员 - 信 息 查 询 界 面</div><br>
+            <img src="the_manager.png" height="420"><br><br>
+            <button onclick="info_management()" class="button_size">查看所有信息</button><br><br>
+            <button onclick="service_allocate_management()" class="button_size">查询某人信息</button><br><br>
+            <button onclick="info_consult()" class="button_size">查看所有业主缴费情况</button><br><br>
+            <button onclick="go_back()" class="button_size">返回上一界面</button>
+        </div>
+        <script>
+            function info_management(){
+                window.location.href='./info_consult_files/all_info.html'
+            }
+            function service_allocate_management(){
+                window.location.href='./info_consult_files/somebody_info.html'
+            }
+            function info_consult(){
+                window.location.href='./info_consult_files/money_situation.html'
+            }
+            function go_back(){
+                window.location.href='./manager.html'
+            }
+        </script>
+    </body>
+</html>

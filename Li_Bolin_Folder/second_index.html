@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>物业管理系统</title>
+        <style>
+            .middle{
+                text-align: center;
+            }
+            .button_size{
+                font-size: 26px;
+                font-weight: 500;
+                padding: 16px 32px;
+            }
+            .header_size{
+                font-size: 40px;
+                font-weight: 700;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="middle">
+            <div class="header_size">请选择您想要了解的系统</div><br><br>
+            <img src="happy_managers.png" height="480"><br><br><br>
+            <button onclick="go_to_manager()" class="button_size">进入管理员系统</button><br><br><br>
+            <button onclick="go_to_server()" class="button_size">进入物业服务人员系统</button><br><br><br>
+            <button onclick="go_to_homeowner()" class="button_size">进入业主系统</button><br><br><br>
+            <button onclick="go_back()" class="button_size">返回上一界面</button>
+        </div>
+        <script>
+            function go_to_manager(){
+                window.location.href='./manager_files/manager.html'
+            }
+            function go_to_server(){
+                window.location.href=''
+            }
+            function go_to_homeowner(){
+                window.location.href=''
+            }
+            function go_back(){
+                window.location.href='./index.html'
+            }
+        </script>
+    </body>
+</html>

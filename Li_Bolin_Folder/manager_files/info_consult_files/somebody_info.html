@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>查询某人信息</title>
+        <style>
+            body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+            .middle { text-align: center; }
+            .input-box { 
+                padding: 12px; 
+                font-size: 18px; 
+                width: 300px; 
+                margin: 10px;
+                border: 2px solid #3498db;
+                border-radius: 6px;
+            }
+            .button_size {
+                font-size: 20px;
+                font-weight: 500;
+                padding: 12px 24px;
+                background: #3498db;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+            }
+            .result { 
+                margin-top: 20px; 
+                background: white; 
+                padding: 20px; 
+                border-radius: 8px;
+                min-height: 100px;
+            }
+            .header_size{
+                font-size: 50px;
+                font-weight: 700;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="middle">
+            <div class="header_size">管 理 员 - 信 息 查 询 界 面 - 查 询 指 定 人 员 信 息</div><br>
+            <input type="text" id="queryInput" class="input-box" placeholder="请输入姓名"><br>
+            <button onclick="searchUser()" class="button_size">查询</button>
+            <button onclick="go_back()" class="button_size">返回上一界面</button>
+            <div id="result" class="result">请输入查询条件</div>
+        </div>
+        <script>
+            function searchUser() {
+                const query = document.getElementById('queryInput').value.trim();
+                if(!query){
+                    alert('请输入查询内容！');
+                    return;
+                }
+                //构建带参数的 URL
+                const url = `/api/user?name=${encodeURIComponent(query)}`;
+                document.getElementById('result').innerHTML = '正在查询...';
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) throw new Error('查询失败');
+                        return response.text();
+                    })
+                    .then(data => {
+                        if(data.trim() === ''){
+                            document.getElementById('result').innerHTML = '<p style="color:#e74c3c;">❌ 未找到匹配的用户</p>';
+                        }else{
+                            document.getElementById('result').innerHTML = '<pre>' + data + '</pre>';
+                        }
+                    })
+                    .catch(error => {
+                        document.getElementById('result').innerHTML = 
+                            '<img src="../crying.png" height="420"><br>' +
+                            '<p style="color:red;">❌ 错误: ' + error.message + '</p>';
+                    });
+            }
+            function go_back(){
+                window.location.href = '../info_consult.html';
+            }
+        </script>
+    </body>
+</html>

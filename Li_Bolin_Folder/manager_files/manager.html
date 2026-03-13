@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>物业管理系统</title>
+        <style>
+            .middle{
+                text-align: center;
+            }
+            .button_size{
+                font-size: 20px;
+                font-weight: 500;
+                padding: 12px 24px;
+            }
+            .header_size{
+                font-size: 50px;
+                font-weight: 700;
+            }
+            .small_text{
+                font-size: 25px;
+                font-weight: 700;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="middle">
+            <div class="header_size">管 理 员 界 面</div><br>
+            <img src="the_manager.png" height="420"><br><br>
+            <button onclick="info_management()" class="button_size">信息管理</button><br><br>
+            <button onclick="service_allocate_management()" class="button_size">服务分配管理</button><br><br>
+            <button onclick="info_consult()" class="button_size">信息查询</button><br><br>
+            <button onclick="info_alignment()" class="button_size">信息排序</button><br><br>
+            <button onclick="info_census()" class="button_size">信息统计</button><br><br>
+            <button onclick="system_maintenance()" class="button_size">系统维护</button><br><br>
+            <button onclick="go_back()" class="button_size">返回上一界面</button>
+        </div>
+        <script>
+            function info_management(){
+                window.location.href=''
+            }
+            function service_allocate_management(){
+                window.location.href=''
+            }
+            function info_consult(){
+                window.location.href='./info_consult.html'
+            }
+            function info_alignment(){
+                window.location.href='./alignment.html'
+            }
+            function info_census(){
+                window.location.href=''
+            }
+            function system_maintenance(){
+                window.location.href=''
+            }
+            function go_back(){
+                window.location.href='../second_index.html'
+            }
+        </script>
+    </body>
+</html>
