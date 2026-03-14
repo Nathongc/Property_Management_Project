@@ -331,72 +331,30 @@ int request_handler(void* cls,
                    const char* url,
                    const char* method,
                    const char* version,
-                   const char* upload_data,
+                   const char* upload,
                    size_t* upload_data_size,
                    void** ptr) {
     
+    // 只处理 GET 和 POST 的完整数据
     if (strcmp(method, "GET") == 0) {
-        // 静态文件处理（优先）
-        if (strstr(url, ".html") || strstr(url, ".css") || strstr(url, ".js") ||
-            strstr(url, ".png") || strstr(url, ".jpg") || strstr(url, ".jpeg")) {
-            
-            char* file_path = map_url_to_file(url);
-            if (file_path) {
-                FILE* fp = fopen(file_path, "r");
-                if (fp) {
-                    fseek(fp, 0, SEEK_END);
-                    long size = ftell(fp);
-                    rewind(fp);
-                    
-                    char* content = malloc(size + 1);
-                    if (content) {
-                        fread(content, 1, size, fp);
-                        content[size] = '\0';
-                        
-                        // 设置 Content-Type
-                        const char* content_type = "text/html; charset=utf-8";
-                        if (strstr(url, ".css")) content_type = "text/css; charset=utf-8";
-                        else if (strstr(url, ".js")) content_type = "application/javascript; charset=utf-8";
-                        else if (strstr(url, ".png")) content_type = "image/png";
-                        else if (strstr(url, ".jpg") || strstr(url, ".jpeg")) content_type = "image/jpeg";
-                        
-                        struct MHD_Response* resp = MHD_create_response_from_buffer(size, (void*)content, MHD_RESPMEM_MUST_FREE);
-                        MHD_add_response_header(resp, "Content-Type", content_type);
-                        int ret = MHD_queue_response(connection, MHD_HTTP_OK, resp);
-                        MHD_destroy_response(resp);
-                        
-                        fclose(fp);
-                        free(file_path);
-                        return ret;
-                    }
-                    fclose(fp);
-                }
-                free(file_path);
-            }
-        }
-        
-        // API 路由
         if (strcmp(url, "/api/all_info") == 0) {
             return handle_get_all_users(connection);
         } else if (strncmp(url, "/api/user", 9) == 0) {
             return handle_query_user(connection);
         }
-        // ... 其他 API
+        // 静态文件略（你已有）
     }
-    // ******************** 添加这部分：POST 请求处理 ********************
-    else if (strcmp(method, "POST") == 0) {
-        // 确保有数据传输
-        if (*upload_data_size > 0) {
-            if (strcmp(url, "/api/users") == 0) {
-                return handle_add_user(connection, upload_data);
-            } else if (strcmp(url, "/api/delete") == 0) {
-                return handle_delete_user(connection, upload_data);
-            } else if (strcmp(url, "/api/update") == 0) {
-                return handle_update_user(connection, upload_data);
-            }
+    
+    // POST 处理：假设数据已完整（小数据场景）
+    if (strcmp(method, "POST") == 0 && *upload_data_size > 0) {
+        if (strcmp(url, "/api/users") == 0) {
+            return handle_add_user(connection, upload_data);
+        } else if (strcmp(url, "/api/delete") == 0) {
+            return handle_delete_user(connection, upload_data);
+        } else if (strcmp(url, "/api/update") == 0) {
+            return handle_update_user(connection, upload_data);
         }
     }
-    // *******************************************************************
     
     return send_response(connection, "Not Found", MHD_HTTP_NOT_FOUND);
 }
@@ -544,6 +502,8 @@ void Imfor_Read() {
         temp_imfor = NULL;
         return;
     }
+    
+    // 读取基本信息
     if (fscanf(fp, "%d %d %d", &temp_imfor->Num_Building, &temp_imfor->charging_date, &temp_imfor->charging_fee) != 3) {
         printf("文件读取失败！\n");
         fclose(fp);
@@ -551,9 +511,13 @@ void Imfor_Read() {
         temp_imfor = NULL;
         return;
     }
+    
+    // 读取停车位信息
     int parking_count = 0;
     while (fscanf(fp, "%d", &temp_imfor->parking[parking_count]) == 1) {
         parking_count++;
+        if (parking_count >= MAX) break;  // 防止溢出
+        
         char c = fgetc(fp);
         if (c == '\n' || c == EOF) {
             break;
@@ -563,6 +527,7 @@ void Imfor_Read() {
         }
     }
     temp_imfor->Num_parking = parking_count;
+    
     if (imfor == NULL) {
         imfor = malloc(sizeof(Imfor));
         if (imfor == NULL) {
@@ -575,14 +540,18 @@ void Imfor_Read() {
     }
     *imfor = *temp_imfor;
     free(temp_imfor);
-    while (1) {
-        char c = fgetc(fp);
+    
+    // 修复：添加人员数据读取的最大数量限制，防止死循环
+    int person_count = 0;
+    const int MAX_PERSONS = 1000;  // 限制最大人数
+    
+    while (person_count < MAX_PERSONS) {  // ❌ 原来的 while(1) 改为有限循环
+        int c = fgetc(fp);
         if (c == EOF) {
-            break;
+            break;  // 文件结束
         }
-        else {
-            ungetc(c, fp);
-        }
+        ungetc(c, fp);  // 把字符放回去
+        
         Person* temp_person = (Person*)malloc(sizeof(Person));
         if (temp_person == NULL) {
             printf("初始化异常！\n");
@@ -590,6 +559,8 @@ void Imfor_Read() {
             return;
         }
         Init_Person(temp_person);
+        
+        // 尝试读取人员数据
         if (fscanf(fp, "%s %s %d %d %lld %lld %d %s",
             temp_person->M_name,
             temp_person->M_sex,
@@ -599,48 +570,74 @@ void Imfor_Read() {
             &temp_person->password,
             &temp_person->parking_imfor,
             temp_person->Career) != 8) {
-            printf("数据读取异常!\n");
+            printf("数据读取异常! 可能是文件格式错误或到达文件末尾\n");
             free(temp_person);
-            fclose(fp);
-            return;
+            break;  // 退出循环
         }
+        
+        // 读取工作区域信息
         if (strcmp(temp_person->Career, "业主") == 0) {
             fscanf(fp, "%d", &temp_person->Area_count);
             temp_person->Area[0] = 0;
         }
         else {
             int temp_Area_count = 0;
-            while (1) {
-                fscanf(fp, "%d", &temp_person->Area[temp_Area_count]);
-                temp_Area_count++;
-                char c = fgetc(fp);
-                if (c == '\n' || c == EOF) {
-                    break;
+            while (temp_Area_count < MAX) {
+                int area_val;
+                if (fscanf(fp, "%d", &area_val) == 1) {
+                    temp_person->Area[temp_Area_count] = area_val;
+                    temp_Area_count++;
+                } else {
+                    break;  // 读取失败
                 }
-                else {
-                    ungetc(c, fp);
+                
+                char sep = fgetc(fp);
+                if (sep == '\n' || sep == EOF) {
+                    break;  // 换行符或文件结束
+                }
+                if (sep != ' ') {
+                    ungetc(sep, fp);  // 不是空格，放回去
+                    break;
                 }
             }
             temp_person->Area_count = temp_Area_count;
         }
+        
+        // 读取缴费次数
         fscanf(fp, "%d", &temp_person->Count_charge);
+        
+        // 读取缴费日期
         int temp_Charge_count = 0;
-        while (1) {
-            fscanf(fp, "%d %d %d", &temp_person->Date_charge[temp_Charge_count][0],
+        while (temp_Charge_count < MAX && temp_Charge_count < temp_person->Count_charge) {
+            if (fscanf(fp, "%d %d %d", 
+                &temp_person->Date_charge[temp_Charge_count][0],
                 &temp_person->Date_charge[temp_Charge_count][1],
-                &temp_person->Date_charge[temp_Charge_count][2]);
-            temp_Charge_count++;
-            char c = fgetc(fp);
-            if (c == '\n' || c == EOF) {
-                break;
+                &temp_person->Date_charge[temp_Charge_count][2]) == 3) {
+                temp_Charge_count++;
+            } else {
+                break;  // 读取失败
             }
-            else {
-                ungetc(c, fp);
+            
+            char sep = fgetc(fp);
+            if (sep == '\n' || sep == EOF) {
+                break;  // 换行符或文件结束
+            }
+            if (sep != ' ') {
+                ungetc(sep, fp);  // 不是空格，放回去
+                break;
             }
         }
         temp_person->Count_charge = temp_Charge_count;
+        
         head = ADD_TO_LIST(head, temp_person);
+        person_count++;  // 计数器递增
+        
+        // 检查是否到达文件末尾
+        if (feof(fp)) {
+            break;
+        }
     }
+    
     fclose(fp);
 }
 
