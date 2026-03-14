@@ -35,11 +35,15 @@ void Show_Imfor(Person* head, Imfor* imfor);
 void Save(Person* head);//存入文件
 void Imfor_Read();//读取文件中的imfor信息
 void AddImfor();//添加人员信xi
+void FindPerson();//查询人员信息
+void Sta_Imfor(Person* head);//统计人员信息
+void maintain_password(Person* head);//密码维护
 Imfor* Init_imfor(Imfor* imfor); //初始化imfor对象
 Person* Init_Person(Person* person);//初始化人
 Person* ADD_TO_LIST(Person* head, Person* person);//加入链表
 Person* Delimfor(Person* head);//从链表中删除对象
 Person* ModImfor(Person* head, Imfor* imfor);//更改信息
 Person* Mod_Person(Person* person);//更改人员
+
 
 
