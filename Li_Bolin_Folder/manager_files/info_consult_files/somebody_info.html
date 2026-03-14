@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>查询人员信息</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+        .middle { text-align: center; }
+        .input-group {
+            margin: 15px 0;
+            display: inline-block;
+            text-align: left;
+            width: 320px;
+        }
+        .input-label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 6px;
+            display: block;
+        }
+        .input-box { 
+            padding: 12px; 
+            font-size: 18px; 
+            width: 100%; 
+            border: 2px solid #3498db;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        .button_size {
+            font-size: 20px;
+            font-weight: 500;
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 8px;
+        }
+        .result { 
+            margin-top: 25px; 
+            background: white; 
+            padding: 20px; 
+            border-radius: 8px;
+            min-height: 100px;
+            text-align: left;
+        }
+        .header_size{
+            font-size: 42px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        .tip {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-top: 8px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="middle">
+        <div class="header_size">🔍 查询指定人员信息</div>
+        
+        <div class="input-group">
+            <span class="input-label">👤 姓名</span>
+            <input type="text" id="nameInput" class="input-box" placeholder="例如：张三">
+            <div class="tip">可单独查询，但重名时会返回多人</div>
+        </div>
+        
+        <div class="input-group">
+            <span class="input-label">📱 电话号码</span>
+            <input type="text" id="phoneInput" class="input-box" placeholder="例如：13800138000">
+            <div class="tip">配合姓名可精准定位重名人员</div>
+        </div>
+        
+        <div style="margin:20px 0;">
+            <button onclick="searchUser()" class="button_size">🔎 精准查询</button>
+            <button onclick="go_back()" class="button_size">⬅️ 返回</button>
+        </div>
+        
+        <div id="result" class="result">请输入姓名或电话进行查询</div>
+    </div>
+
+    <script>
+        function searchUser() {
+    const name = document.getElementById('nameInput').value.trim();
+    const phone = document.getElementById('phoneInput').value.trim();
+    
+    // 至少填一项
+    if (!name && !phone) {
+        alert('⚠️ 请至少填写姓名或电话号码！');
+        return;
+    }
+    
+    // 构建带双参数的 URL（只发送非空参数）
+    const params = new URLSearchParams();
+    if (name) params.append('name', name);
+    if (phone) params.append('phone', phone);
+    
+    const url = `/api/user?${params.toString()}`;
+    
+    document.getElementById('result').innerHTML = '🔍 正在查询...';
+    
+    fetch(url)
+        .then(response => {
+            if (!response.ok) throw new Error('查询失败');
+            return response.text();
+        })
+        .then(data => {
+            const lines = data.trim().split('\n').filter(line => line.trim() !== '');
+            
+            if (lines.length === 0) {
+                document.getElementById('result').innerHTML = 
+                    '<p style="color:#e74c3c; font-size:18px;">❌ 未找到匹配的人员</p>';
+            } 
+            else if (lines.length === 1) {
+                // 单一结果：直接显示 ✅ 修复后的正确代码
+                document.getElementById('result').innerHTML = 
+                    '<p style="color:#27ae60; font-weight:bold; margin-bottom:10px;">✅ 找到 1 位匹配人员：</p>' +
+                    '<pre style="background:#f8f9fa; padding:15px; border-radius:6px;">' + lines[0] + '</pre>';
+            } 
+            else {
+                // 多个结果：列表展示
+                let html = `<p style="color:#f39c12; font-weight:bold; margin-bottom:15px;">
+                    ⚠️ 找到 ${lines.length} 位同名人员，请核对信息：
+                </p><ol style="text-align:left; padding-left:20px;">`;
+                
+                lines.forEach(line => {
+                    html += `<li style="margin:12px 0; padding:10px; background:#f8f9fa; border-radius:4px;">
+                        ${line}
+                    </li>`;
+                });
+                
+                html += `</ol><p style="color:#7f8c8d; font-style:italic; margin-top:15px;">
+                💡 建议：补充电话号码可精准定位特定人员
+                </p>`;
+                
+                document.getElementById('result').innerHTML = html;
+            }
+        })
+        .catch(error => {
+            document.getElementById('result').innerHTML = 
+                '<img src="../crying.png" height="300"><br>' +
+                '<p style="color:red; font-size:18px; margin-top:15px;">❌ 查询错误: ' + error.message + '</p>';
+        });
+}
+        
+        function go_back() {
+            window.location.href = '../info_consult.html';
+        }
+        
+        // 支持回车键查询
+        document.getElementById('nameInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') searchUser();
+        });
+        document.getElementById('phoneInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') searchUser();
+        });
+    </script>
+</body>
+</html>
