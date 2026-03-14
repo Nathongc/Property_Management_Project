@@ -284,22 +284,35 @@ char* map_url_to_file(const char* url) {
     
     printf("DEBUG: 执行目录: '%s'\n", exe_dir);
     
-    // 修正路径：从 build/ 到 manager_files/ 需要 ../../manager_files
+    // 从 build/ 回退到 Li_Bolin_Folder/ 项目根目录
     char full_path[2048];
-    snprintf(full_path, sizeof(full_path), "%s/../../manager_files%s", exe_dir, url);
-    printf("DEBUG: 尝试路径: '%s'\n", full_path);
+    snprintf(full_path, sizeof(full_path), "%s/../..%s", exe_dir, url);
+    printf("DEBUG: 尝试项目根路径: '%s'\n", full_path);
     
     FILE* test_fp = fopen(full_path, "r");
     if (test_fp) {
-        printf("DEBUG: 文件存在！\n");
+        printf("DEBUG: 项目根路径找到文件！\n");
         fclose(test_fp);
         free(exe_dir);
         return strdup(full_path);
     }
     
-    // 备用：尝试 owner_files
+    // 如果在根目录没找到，尝试 manager_files/
+    snprintf(full_path, sizeof(full_path), "%s/../../manager_files%s", exe_dir, url);
+    printf("DEBUG: 尝试 manager_files 路径: '%s'\n", full_path);
+    
+    test_fp = fopen(full_path, "r");
+    if (test_fp) {
+        printf("DEBUG: manager_files 路径找到文件！\n");
+        fclose(test_fp);
+        free(exe_dir);
+        return strdup(full_path);
+    }
+    
+    // 尝试 owner_files/
     snprintf(full_path, sizeof(full_path), "%s/../../owner_files%s", exe_dir, url);
-    printf("DEBUG: 尝试备用路径: '%s'\n", full_path);
+    printf("DEBUG: 尝试 owner_files 路径: '%s'\n", full_path);
+    
     test_fp = fopen(full_path, "r");
     if (test_fp) {
         printf("DEBUG: owner_files 路径找到文件！\n");
@@ -308,7 +321,7 @@ char* map_url_to_file(const char* url) {
         return strdup(full_path);
     }
     
-    printf("DEBUG: 两个路径都找不到文件\n");
+    printf("DEBUG: 所有路径都找不到文件\n");
     free(exe_dir);
     return NULL;
 }
