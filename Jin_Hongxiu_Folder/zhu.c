@@ -1,4 +1,4 @@
-//主程序
+﻿//主程序
 #include "tou.h"
 yezhu* head = NULL;
 yezhu* prear = NULL;
@@ -50,9 +50,15 @@ int main()
 		{
 			if (signin() == 0)
 			{
-				caozuo();
-				tiaozhuan();
-				continue;
+				while (1)
+				{
+					caozuo();
+					int a=tiaozhuan();
+					if(a==1)
+					{
+						break;
+					}
+				}
 			}
 			else
 			{
@@ -68,8 +74,15 @@ int main()
 		{
 			if (zhuce() == 0)
 			{
-				caozuo();
-				tiaozhuan();
+				while (1)
+				{
+					caozuo();
+					int a = tiaozhuan();
+					if (a == 1)
+					{
+						break;
+					}
+				}
 			}
 			else
 			{
