@@ -1,14 +1,16 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+#include<time.h>
 #define MAX 1000
 #define FILENAME "Manager.txt"
 typedef struct Imformation Imfor;
 typedef struct Person Person;
 extern Imfor* imfor;//无机物信息
-extern Person* head;// 链表头指针
-
-
+extern Person* head;//链表头指针
+extern int year;
+extern int month;
+extern int day;
 struct Person {//人
     long long password;//密码
     long long M_phone_num;//电话号
@@ -31,6 +33,7 @@ struct Imformation {//无机物信息
     int charging_fee;//收费金额
     int charging_date;//收费周期
 };
+void Get_time();//获取时间
 void Show_Imfor(Person* head, Imfor* imfor);
 void Save(Person* head);//存入文件
 void Imfor_Read();//读取文件中的imfor信息
