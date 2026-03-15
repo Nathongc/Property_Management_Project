@@ -1,0 +1,3 @@
+/home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/build/CMakeFiles/final_result.dir
+/home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/build/CMakeFiles/edit_cache.dir
+/home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/build/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/manager.dir/src/Management.c.o -o manager  -lmicrohttpd 
