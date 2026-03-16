@@ -4,6 +4,20 @@ Person* head = NULL;
 year = 0;
 month = 0;
 day = 0;
+void Authorize() {
+    printf("请输入管理员ID:\n");
+    long long ManagerID;
+    while (1) {
+        scanf("%lld", &ManagerID);
+        if (ManagerID == MANAGER_PASSWORD) {
+            printf("授权成功！\n");
+            break;
+        }
+        else {
+            printf("输入错误！\n");
+        }
+    }
+}
 void Get_time() {
     time_t current = time(NULL);
     if (current == NULL) {
@@ -155,7 +169,16 @@ void Imfor_Read() {//读文件
             fclose(fp);
             return;
         }
-    } 
+    }
+    int occupy = 0;
+    for (int i = 0; i < imfor->Num_parking; i++) {
+        if (imfor->parking[i] == 1 || imfor->parking[i] == -1) {
+            occupy++;
+        }
+    }
+    if ((occupy / imfor->Num_parking) > 0.9) {
+        printf("90%的停车位被占用或关闭！！！\n");
+    }
     /*接下来读取人员信息*/
     while (1) {
         char c = fgetc(fp);
@@ -1016,4 +1039,40 @@ void maintain_password(Person* head) {
     }
     printf("找不到对象！\n");
     return;
+}
+void Generate() {//生成账单(新增）
+    int M_count = 0;
+    Person* fir_node = head;
+    while (fir_node != NULL) {
+        if (strcmp(fir_node->Career, "业主") == 0 && fir_node->Count_charge != 0) {
+            M_count++;
+        }
+        fir_node = fir_node->next;
+    }
+    if (!M_count) {
+        printf("文件无可写内容！\n");
+        return;
+    }
+    if (head == NULL) {
+        printf("账单生成失败!\n");
+        return;
+    }
+    FILE* fp;
+    fp = fopen(BILL, "w");
+    if (fp == NULL) {
+        printf("文件生成失败!\n");
+        return;
+    }
+    Person* node = head;
+    while (node != NULL) {
+        if (strcmp(node->Career, "业主") == 0&&node->Count_charge!=0) {
+            fprintf(fp, "业主:%s\n", node->M_name);
+            for (int i = node->Count_charge; i >=1; i--) {
+                fprintf(fp,"缴费次数:%d 时间：%d/%d/%d\n", i, node->Date_charge[i][0], node->Date_charge[i][1], node->Date_charge[i][2]);
+            }
+        }
+        node = node->next;
+    }
+    printf("生成账单到本地成功！\n");
+    fclose(fp);
 }
