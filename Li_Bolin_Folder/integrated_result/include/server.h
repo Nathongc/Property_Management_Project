@@ -9,6 +9,7 @@ int statistics_by_area(char* area,int index);
 int statistics_by_year_and_area(int year,char* area,int index);
 void statistics_2026_unpaid(int index);
 void statistics_year_condition(int index);
+void perform_sorting();
 
 //物业服务人员系统
 void server_system();

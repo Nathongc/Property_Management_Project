@@ -493,6 +493,10 @@ int tiaozhuan()
     {
         showworkers(); // 显示人员
     }
+    else if (tmp == 6)
+    {
+        paixuMenu();
+    }
     else if (tmp == 7)
     {
         tongjimenu(); // 统计页面
@@ -1479,6 +1483,204 @@ void tongjimenu() // 6.统计页面
             return;
         }
     }
+}
+
+// --- 新增：排序菜单 ---
+void paixuMenu() {
+    int choice_type = 0;
+    int choice_order = 0;
+
+    printf("--- 排序选项 ---\n");
+    printf("请选择排序依据:\n");
+    printf("1. 按账单日期\n");
+    printf("2. 按金额\n");
+    printf("请选择 (1 或 2): ");
+    scanf("%d", &choice_type);
+
+    if (choice_type != 1 && choice_type != 2) {
+        printf("无效选择，返回主菜单。\n");
+        clean(); // 清空输入缓冲区
+        return;
+    }
+
+    printf("请选择排序顺序:\n");
+    printf("1. 升序 (Ascending)\n");
+    printf("2. 降序 (Descending)\n");
+    printf("请选择 (1 或 2): ");
+    scanf("%d", &choice_order);
+
+    if (choice_order != 1 && choice_order != 2) {
+        printf("无效选择，返回主菜单。\n");
+        clean(); // 清空输入缓冲区
+        return;
+    }
+    clean(); // 清空输入缓冲区
+
+    // 调用具体的排序函数
+    if (choice_type == 1) {
+        if (choice_order == 1) {
+            sortFeesByDateAsc();
+        } else {
+            sortFeesByDateDesc();
+        }
+    } else { // choice_type == 2
+        if (choice_order == 1) {
+            sortFeesByAmountAsc();
+        } else {
+            sortFeesByAmountDesc();
+        }
+    }
+
+    printf("排序完成。\n");
+}
+
+// --- 新增：辅助比较函数 (按账单日期升序) ---
+int compareFeeDateAsc(const void *a, const void *b) {
+    fee* fa = *(fee**)a;
+    fee* fb = *(fee**)b;
+
+    int date_a[3], date_b[3];
+    chartodate(fa->date, date_a);
+    chartodate(fb->date, date_b);
+
+    // 比较年
+    if (date_a[0] != date_b[0]) return date_a[0] - date_b[0];
+    // 比较月
+    if (date_a[1] != date_b[1]) return date_a[1] - date_b[1];
+    // 比较日
+    return date_a[2] - date_b[2];
+}
+
+// --- 新增：辅助比较函数 (按账单日期降序) ---
+int compareFeeDateDesc(const void *a, const void *b) {
+    // 复用升序逻辑，但返回相反值
+    return -compareFeeDateAsc(a, b);
+}
+
+// --- 新增：辅助比较函数 (按金额升序) ---
+int compareFeeAmountAsc(const void *a, const void *b) {
+    fee* fa = *(fee**)a;
+    fee* fb = *(fee**)b;
+
+    int amount_a = atoi(fa->sum);
+    int amount_b = atoi(fb->sum);
+
+    return amount_a - amount_b;
+}
+
+// --- 新增：辅助比较函数 (按金额降序) ---
+int compareFeeAmountDesc(const void *a, const void *b) {
+    // 复用升序逻辑，但返回相反值
+    return -compareFeeAmountAsc(a, b);
+}
+
+// --- 新增：按账单日期升序排序 ---
+void sortFeesByDateAsc() {
+    sortFeesWithComparator(compareFeeDateAsc);
+}
+
+// --- 新增：按账单日期降序排序 ---
+void sortFeesByDateDesc() {
+    sortFeesWithComparator(compareFeeDateDesc);
+}
+
+// --- 新增：按金额升序排序 ---
+void sortFeesByAmountAsc() {
+    sortFeesWithComparator(compareFeeAmountAsc);
+}
+
+// --- 新增：按金额降序排序 ---
+void sortFeesByAmountDesc() {
+    sortFeesWithComparator(compareFeeAmountDesc);
+}
+
+// --- 新增：通用排序逻辑 ---
+void sortFeesWithComparator(int (*comparator)(const void *, const void *)) {
+    // 1. 遍历主链表，找出当前用户的所有缴费记录，并存入动态数组
+    fee* current_fee = owner_head1123->next1; // 从第一个有效节点开始
+    int count = 0;
+    int capacity = 10; // 初始容量
+    fee** temp_array = (fee**)malloc(capacity * sizeof(fee*));
+
+    if (!temp_array) {
+        printf("内存分配失败，无法排序。\n");
+        return;
+    }
+
+    while (current_fee != NULL) {
+        if (strcmp(current_fee->add1, owner_current123->add1) == 0 &&
+            strcmp(current_fee->add2, owner_current123->add2) == 0 &&
+            strcmp(current_fee->add3, owner_current123->add3) == 0) {
+
+            // 如果数组满了，扩容
+            if (count >= capacity) {
+                capacity *= 2;
+                fee** temp_realloc = (fee**)realloc(temp_array, capacity * sizeof(fee*));
+                if (!temp_realloc) {
+                    printf("内存重新分配失败，无法排序。\n");
+                    free(temp_array);
+                    return;
+                }
+                temp_array = temp_realloc;
+            }
+
+            temp_array[count] = current_fee;
+            count++;
+        }
+        current_fee = current_fee->next1;
+    }
+
+    if (count <= 1) {
+        // 如果记录数少于等于1，则无需排序
+        free(temp_array);
+        return;
+    }
+
+    // 2. 对数组进行排序
+    qsort(temp_array, count, sizeof(fee*), comparator);
+
+    // 3. 重建链表连接 (将排序后的节点重新链接起来)
+    // 注意：我们只改变这些节点内部的 next1 指针，形成一个子链
+    for (int i = 0; i < count - 1; i++) {
+        temp_array[i]->next1 = temp_array[i+1];
+    }
+    temp_array[count - 1]->next1 = NULL; // 最后一个节点的 next1 设为 NULL
+
+    // 4. 将原主链表中属于当前用户的所有节点从链上摘除
+    // 需要找到这些节点的前驱和后继
+    fee* prev_in_main_list = owner_head1123; // 指向主链表中某个节点的前驱
+    current_fee = owner_head1123->next1;
+
+    while (current_fee != NULL) {
+        if (strcmp(current_fee->add1, owner_current123->add1) == 0 &&
+            strcmp(current_fee->add2, owner_current123->add2) == 0 &&
+            strcmp(current_fee->add3, owner_current123->add3) == 0) {
+            
+            // 找到属于当前用户的一个节点，将其从主链表中断开
+            prev_in_main_list->next1 = current_fee->next1;
+            // current_fee 已经在 temp_array 中，其 next1 在上一步已经被设置
+            current_fee = prev_in_main_list->next1; // 移动到断开点的下一个节点继续检查
+        } else {
+            prev_in_main_list = current_fee;
+            current_fee = current_fee->next1;
+        }
+    }
+
+
+    // 5. 将排序后的子链（temp_array[0] 是头）重新插入到主链表的末尾
+    // 首先找到主链表的最后一个节点
+    fee* last_node_in_main = owner_head1123;
+    while (last_node_in_main->next1 != NULL) {
+        last_node_in_main = last_node_in_main->next1;
+    }
+    // 将排序好的子链接到主链表末尾
+    last_node_in_main->next1 = temp_array[0];
+    // 更新全局尾指针
+    owner_prear1123 = temp_array[count - 1]; // 尾指针指向排序后子链的最后一个节点
+
+
+    // 6. 释放临时数组
+    free(temp_array);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
