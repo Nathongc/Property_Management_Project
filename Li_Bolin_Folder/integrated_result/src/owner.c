@@ -147,7 +147,6 @@ int loadusers() // 加载用户到链表
 
 void qidong()
 {
-    system("clear");
     printf("*************************\n");
     printf("*********请选择**********\n");
     printf("*********1__登录*********\n");
@@ -159,7 +158,6 @@ void qidong()
 // 操作页面
 void caozuo()
 {
-    system("clear");
     printf("\n==================== 业主功能菜单 ====================\n");
     printf("1.修改信息\n");
     printf("2.缴费查询\n");

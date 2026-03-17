@@ -489,7 +489,6 @@ void load_all_text(){
 }
 
 void show_staff_menu(){
-    system("clear");
     printf("******************************\n");
     printf(" 物业服务人员菜单 \n");
     printf("****** 1.我的         **** \n");
@@ -501,7 +500,6 @@ void show_staff_menu(){
 }
 
 void show_mine_menu(){
-    system("clear");
     printf("******************************\n");
     printf("********我的           ********\n");
     printf("****** 1.查看个人信息  **** \n");
@@ -552,7 +550,6 @@ void mine(int index, int id){
 }
 
 void show_query_menu(){
-    system("clear");
     printf("******************************\n");
     printf("****** 信息查询       **** \n");
     printf("****** 1.我的负责区域  **** \n");
@@ -595,7 +592,6 @@ void query(int index, int id){
 
 // --- 新增：排序菜单 ---
 void show_sort_menu(){
-    system("clear");
     printf("******************************\n");
     printf("****** 信息排序       **** \n");
     printf(" 1.按姓名排序 (升序/降序) \n");
@@ -755,7 +751,6 @@ void perform_sorting(){
 
 
 void show_statistics_menu(){
-    system("clear");
     printf("******************************\n");
     printf("********信息统计       ********\n");
     printf("********1.按单一属性统计********\n");

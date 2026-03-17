@@ -526,7 +526,7 @@ Person* ModImfor(Person* head, Imfor* imfor) {//更改信息
                 newperson->next = NULL;
 
                 printf("修改成功！\n");
-                //Save(head);
+                Save(head);
                 return head;
             }
         }
@@ -540,7 +540,7 @@ Person* ModImfor(Person* head, Imfor* imfor) {//更改信息
             newperson->next = nextnode;
 
             printf("修改成功！\n");
-            //Save(head);
+            Save(head);
             return head;
         }
         while (node->next != NULL) {
@@ -555,7 +555,7 @@ Person* ModImfor(Person* head, Imfor* imfor) {//更改信息
                 newperson->next = nextnode;
 
                 printf("修改成功！\n");
-                //Save(head);
+                Save(head);
                 return head;
             }
             if (node->next->next == NULL && strcmp(node->next->M_name, mod_person) == 0) {
@@ -568,7 +568,7 @@ Person* ModImfor(Person* head, Imfor* imfor) {//更改信息
                 newperson->next = NULL;
 
                 printf("修改成功！\n");
-                //Save(head);
+                Save(head);
                 return head;
             }
             node = node->next;
@@ -820,7 +820,7 @@ void Sta_Imfor(Person* head) {
         printf("无法统计！\n");
         return;
     }
-    printf("请输入你要统计的维度:\n1.职业 2.年龄 3.性别 4.住址 5.本年度已缴费 6.本年度未缴费\n");
+    printf("请输入你要统计的维度:\n1.职业 2.年龄 3.性别 4.住址 5.本年度未缴费 6.本年度已缴费\n");
     int choice;
     Person* node = head;
     int sum = 0;
