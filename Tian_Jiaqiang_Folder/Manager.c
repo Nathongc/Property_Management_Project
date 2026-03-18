@@ -1076,3 +1076,166 @@ void Generate() {//生成账单(新增）
     printf("生成账单到本地成功！\n");
     fclose(fp);
 }
+Person* Sort_Person(Person* head) {
+    int node_count = 0;
+    Person* node = head;
+    Person* array[MAX];
+    if (head == NULL) {
+        printf("链表为空！无法排序!\n");
+        return head;
+    }
+    while (node != NULL) {
+        array[node_count] = node;
+        node_count++;
+        node = node->next;
+    }
+    printf("请输入排序依据:\n1.年龄2.姓名3.职业+年龄4.职业+姓名5.家庭住址(升序)\n");
+    int sort_choice;
+    scanf("%d", &sort_choice);
+    switch (sort_choice) {
+    case 1:
+    {
+        printf("请输入排序方式：\n1.升序2.降序\n");
+        int measure;
+        scanf("%d", &measure);
+        switch (measure) {
+        case 1:
+            for (int i = 0; i < node_count - 1; i++) {
+                for (int j = 0; j < node_count - i - 1; j++) {
+                    if (array[j]->M_age > array[j + 1]->M_age) {
+                        Person* temp = array[j];
+                        array[j] = array[j + 1];
+                        array[j + 1] = temp;
+                    }
+                }
+            }
+            break;
+        case 2:
+            for (int i = 0; i < node_count - 1; i++) {
+                for (int j = 0; j < node_count - i - 1; j++) {
+                    if (array[j]->M_age < array[j + 1]->M_age) {
+                        Person* temp = array[j];
+                        array[j] = array[j + 1];
+                        array[j + 1] = temp;
+                    }
+                }
+            }
+            break;
+        default:
+            printf("输入错误！已退出\n");
+            return head;
+            break;
+        }
+        break;
+    }
+    case 2:
+        for (int i = 0; i < node_count - 1; i++) {
+            for (int j = 0; j < node_count - i - 1; j++) {
+                if (strcmp(array[j]->M_name, array[j + 1]->M_name) > 0) {
+                    Person* temp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = temp;
+                }
+            }
+        }
+        break;
+    case 3:
+    {
+        printf("请输入排序方式：\n1.年龄升序2.年龄降序\n");
+        int measure;
+        scanf("%d", &measure);
+        switch (measure) {
+        case 1:
+            for (int i = 0; i < node_count - 1; i++) {
+                for (int j = 0; j < node_count - i - 1; j++) {
+                    if (strcmp(array[j]->Career, array[j + 1]->Career) != 0) {
+                        if (strcmp(array[j]->Career, array[j + 1]->Career) > 0) {
+                            Person* temp = array[j];
+                            array[j] = array[j + 1];
+                            array[j + 1] = temp;
+                        }
+                    }
+                    else {
+                        if (array[j]->M_age > array[j + 1]->M_age) {
+                            Person* temp = array[j];
+                            array[j] = array[j + 1];
+                            array[j + 1] = temp;
+                        }
+                    }
+                }
+            }
+            break;
+        case 2:
+            for (int i = 0; i < node_count - 1; i++) {
+                for (int j = 0; j < node_count - i - 1; j++) {
+                    if (strcmp(array[j]->Career, array[j + 1]->Career) != 0) {
+                        if (strcmp(array[j]->Career, array[j + 1]->Career) > 0) {
+                            Person* temp = array[j];
+                            array[j] = array[j + 1];
+                            array[j + 1] = temp;
+                        }
+                    }
+                    else {
+                        if (array[j]->M_age < array[j + 1]->M_age) {
+                            Person* temp = array[j];
+                            array[j] = array[j + 1];
+                            array[j + 1] = temp;
+                        }
+                    }
+                }
+            }
+            break;
+        default:
+            printf("输入错误！已退出\n");
+            return head;
+            break;
+        }
+        break;
+    }
+    case 4:
+        for (int i = 0; i < node_count - 1; i++) {
+            for (int j = 0; j < node_count - i - 1; j++) {
+                if (strcmp(array[j]->Career, array[j + 1]->Career) != 0) {
+                    if (strcmp(array[j]->Career, array[j + 1]->Career) > 0) {
+                        Person* temp = array[j];
+                        array[j] = array[j + 1];
+                        array[j + 1] = temp;
+                    }
+                }
+                else {
+                    if (strcmp(array[j]->M_name, array[j + 1]->M_name) > 0) {
+                        Person* temp = array[j];
+                        array[j] = array[j + 1];
+                        array[j + 1] = temp;
+                    }
+                }
+            }
+        }
+        break;
+    case 5:
+    {
+        for (int i = 0; i < node_count - 1; i++) {
+            for (int j = 0; j < node_count - i - 1; j++) {
+                if (array[j]->M_area > array[j + 1]->M_area) {
+                    Person* temp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = temp;
+                }
+            }
+        }
+        break;
+    }
+    default:
+        printf("输入错误，已退出\n");
+        return head;
+        break;
+    }
+    head = array[0];
+    for (int i = 1; i < node_count; i++) {
+        array[i - 1]->next = array[i];
+    }
+    array[node_count - 1]->next = NULL;
+    Save(head);
+    printf("排序成功！请回到主菜单按1查看结果\n");
+    return head;
+}

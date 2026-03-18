@@ -51,7 +51,4 @@ Person* ADD_TO_LIST(Person* head, Person* person);//加入链表
 Person* Delimfor(Person* head);//从链表中删除对象
 Person* ModImfor(Person* head, Imfor* imfor);//更改信息
 Person* Mod_Person(Person* person);//更改人员
-//Perosn* Sort_Person
-
-
-
+Person* Sort_Person(Person* head);//排序
