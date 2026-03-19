@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/final_result.dir/src/main.c.o.d"
   "CMakeFiles/final_result.dir/src/manager.c.o"
   "CMakeFiles/final_result.dir/src/manager.c.o.d"
+  "CMakeFiles/final_result.dir/src/owner.c.o"
+  "CMakeFiles/final_result.dir/src/owner.c.o.d"
   "CMakeFiles/final_result.dir/src/server.c.o"
   "CMakeFiles/final_result.dir/src/server.c.o.d"
   "final_result"

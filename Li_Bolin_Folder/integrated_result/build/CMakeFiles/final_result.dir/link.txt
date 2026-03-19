@@ -1,1 +1,1 @@
-/usr/bin/cc CMakeFiles/final_result.dir/src/main.c.o CMakeFiles/final_result.dir/src/manager.c.o CMakeFiles/final_result.dir/src/server.c.o -o final_result 
+/usr/bin/cc CMakeFiles/final_result.dir/src/main.c.o CMakeFiles/final_result.dir/src/manager.c.o CMakeFiles/final_result.dir/src/server.c.o CMakeFiles/final_result.dir/src/owner.c.o -o final_result 

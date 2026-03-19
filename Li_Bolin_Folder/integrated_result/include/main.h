@@ -5,3 +5,5 @@
 void manager_system();
 //物业服务人员系统
 void server_system();
+//业主系统
+void owner_system();

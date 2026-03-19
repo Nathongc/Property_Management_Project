@@ -1,4 +1,4 @@
-﻿//主程序
+//主程序
 #include "tou.h"
 yezhu* head = NULL;
 yezhu* prear = NULL;

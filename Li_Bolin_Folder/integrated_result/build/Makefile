@@ -177,6 +177,30 @@ src/manager.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/manager.c.s
 .PHONY : src/manager.c.s
 
+src/owner.o: src/owner.c.o
+.PHONY : src/owner.o
+
+# target to build an object file
+src/owner.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/owner.c.o
+.PHONY : src/owner.c.o
+
+src/owner.i: src/owner.c.i
+.PHONY : src/owner.i
+
+# target to preprocess a source file
+src/owner.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/owner.c.i
+.PHONY : src/owner.c.i
+
+src/owner.s: src/owner.c.s
+.PHONY : src/owner.s
+
+# target to generate assembly for a file
+src/owner.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/owner.c.s
+.PHONY : src/owner.c.s
+
 src/server.o: src/server.c.o
 .PHONY : src/server.o
 
@@ -216,6 +240,9 @@ help:
 	@echo "... src/manager.o"
 	@echo "... src/manager.i"
 	@echo "... src/manager.s"
+	@echo "... src/owner.o"
+	@echo "... src/owner.i"
+	@echo "... src/owner.s"
 	@echo "... src/server.o"
 	@echo "... src/server.i"
 	@echo "... src/server.s"

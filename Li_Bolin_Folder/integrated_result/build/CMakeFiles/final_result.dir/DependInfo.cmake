@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/main.c" "CMakeFiles/final_result.dir/src/main.c.o" "gcc" "CMakeFiles/final_result.dir/src/main.c.o.d"
   "/home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/manager.c" "CMakeFiles/final_result.dir/src/manager.c.o" "gcc" "CMakeFiles/final_result.dir/src/manager.c.o.d"
+  "/home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/owner.c" "CMakeFiles/final_result.dir/src/owner.c.o" "gcc" "CMakeFiles/final_result.dir/src/owner.c.o.d"
   "/home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/server.c" "CMakeFiles/final_result.dir/src/server.c.o" "gcc" "CMakeFiles/final_result.dir/src/server.c.o.d"
   )
 

@@ -20,11 +20,7 @@ int main() {
             server_system();
             break;
         case 3:
-            printf("抱歉，正在开发中\n");
-            printf("\n✅ 按回车键继续...");
-            while(getchar() != '\n');
-            getchar();
-            system("clear");
+            owner_system();
             break;
         default:
             printf("谢谢使用，再见!\n");

@@ -5,6 +5,26 @@ year = 0;
 month = 0;
 day = 0;
 
+int Authorize() {
+    printf("请输入管理员ID:\n");
+    long long ManagerID;
+    while (1) {
+        scanf("%lld", &ManagerID);
+        if (ManagerID == MANAGER_PASSWORD) {
+            printf("授权成功！\n");
+            break;
+        }
+        else {
+            printf("输入错误！\n");
+            printf("✅ 按回车键继续...");
+            while(getchar() != '\n');
+            getchar();
+            system("clear");
+            return -1;
+        }
+    }
+    return 1;
+}
 void Get_time() {
     time_t current = time(NULL);
     if (current == NULL) {
@@ -156,7 +176,16 @@ void Imfor_Read() {//读文件
             fclose(fp);
             return;
         }
-    } 
+    }
+    int occupy = 0;
+    for (int i = 0; i < imfor->Num_parking; i++) {
+        if (imfor->parking[i] == 1 || imfor->parking[i] == -1) {
+            occupy++;
+        }
+    }
+    if ((occupy / imfor->Num_parking) > 0.9) {
+        printf("百分之九十的停车位被占用或关闭！！！\n");
+    }
     /*接下来读取人员信息*/
     while (1) {
         char c = fgetc(fp);
@@ -497,7 +526,7 @@ Person* ModImfor(Person* head, Imfor* imfor) {//更改信息
                 newperson->next = NULL;
 
                 printf("修改成功！\n");
-                //Save(head);
+                Save(head);
                 return head;
             }
         }
@@ -511,7 +540,7 @@ Person* ModImfor(Person* head, Imfor* imfor) {//更改信息
             newperson->next = nextnode;
 
             printf("修改成功！\n");
-            //Save(head);
+            Save(head);
             return head;
         }
         while (node->next != NULL) {
@@ -526,7 +555,7 @@ Person* ModImfor(Person* head, Imfor* imfor) {//更改信息
                 newperson->next = nextnode;
 
                 printf("修改成功！\n");
-                //Save(head);
+                Save(head);
                 return head;
             }
             if (node->next->next == NULL && strcmp(node->next->M_name, mod_person) == 0) {
@@ -539,7 +568,7 @@ Person* ModImfor(Person* head, Imfor* imfor) {//更改信息
                 newperson->next = NULL;
 
                 printf("修改成功！\n");
-                //Save(head);
+                Save(head);
                 return head;
             }
             node = node->next;
@@ -791,7 +820,7 @@ void Sta_Imfor(Person* head) {
         printf("无法统计！\n");
         return;
     }
-    printf("请输入你要统计的维度:\n1.职业 2.年龄 3.性别 4.住址 5.本年度已缴费 6.本年度未缴费\n");
+    printf("请输入你要统计的维度:\n1.职业 2.年龄 3.性别 4.住址 5.本年度未缴费 6.本年度已缴费\n");
     int choice;
     Person* node = head;
     int sum = 0;
@@ -1019,10 +1048,51 @@ void maintain_password(Person* head) {
     return;
 }
 
+void Generate() {//生成账单(新增）
+    int M_count = 0;
+    Person* fir_node = head;
+    while (fir_node != NULL) {
+        if (strcmp(fir_node->Career, "业主") == 0 && fir_node->Count_charge != 0) {
+            M_count++;
+        }
+        fir_node = fir_node->next;
+    }
+    if (!M_count) {
+        printf("文件无可写内容！\n");
+        return;
+    }
+    if (head == NULL) {
+        printf("账单生成失败!\n");
+        return;
+    }
+    FILE* fp;
+    fp = fopen(BILL, "w");
+    if (fp == NULL) {
+        printf("文件生成失败!\n");
+        return;
+    }
+    Person* node = head;
+    while (node != NULL) {
+        if (strcmp(node->Career, "业主") == 0&&node->Count_charge!=0) {
+            fprintf(fp, "业主:%s\n", node->M_name);
+            for (int i = node->Count_charge; i >=1; i--) {
+                fprintf(fp,"缴费次数:%d 时间：%d/%d/%d\n", i, node->Date_charge[i][0], node->Date_charge[i][1], node->Date_charge[i][2]);
+            }
+        }
+        node = node->next;
+    }
+    printf("生成账单到本地成功！\n");
+    fclose(fp);
+}
+
 void manager_system(){
     system("clear");
+    int success = Authorize();
+    if(success==-1){
+        return;
+    }
     while(1){
-        printf("您已获得管理员权限！\n今天是%d年%d月%d日\n1.显示所有人员信息\n2.添加人员信息\n3.删除人员信息\n4.修改人员信息\n5.查询人员信息\n6.统计人员信息\n7.维护密码\n0.返回上一界面\n",year,month,day);
+        printf("您已获得管理员权限！\n今天是%d年%d月%d日\n1.显示所有人员信息\n2.添加人员信息\n3.删除人员信息\n4.修改人员信息\n5.查询人员信息\n6.统计人员信息\n7.维护密码\n8.账单生成\n0.返回上一界面\n",year,month,day);
         int choice;
         scanf("%d", &choice);
             switch (choice) {
@@ -1076,6 +1146,13 @@ void manager_system(){
                 getchar();
                 system("clear");
                 break;
+            case 8:
+                Generate();
+                printf("\n✅ 按回车键继续...");
+                while(getchar() != '\n');
+                getchar();
+                system("clear");
+                break;
             case 0:
                 Save(head);
                 printf("\n✅ 按回车键继续...");
@@ -1084,6 +1161,11 @@ void manager_system(){
                 system("clear");
                 return;
             default:
+                printf("输入错误，请重新输入");
+                printf("\n✅ 按回车键继续...");
+                while(getchar() != '\n');
+                getchar();
+                system("clear");
                 break;
         }
     }
