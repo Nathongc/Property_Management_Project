@@ -1,6 +1,7 @@
 #include "Manager.h"
 int main() {
     Authorize();
+    system("cls");
     if (imfor == NULL) {
         imfor = Init_imfor(imfor);
     }
