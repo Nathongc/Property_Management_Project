@@ -4,7 +4,7 @@ Person* head = NULL;
 year = 0;
 month = 0;
 day = 0;
-void Authorize() {
+void Authorize() {//管理员授权
     printf("请输入管理员ID:\n");
     long long ManagerID;
     while (1) {
@@ -18,7 +18,7 @@ void Authorize() {
         }
     }
 }
-void Get_time() {
+void Get_time() {//获取时间
     time_t current = time(NULL);
     if (current == NULL) {
         printf("当前时间获取失败！\n");
@@ -33,7 +33,7 @@ void Get_time() {
     month = local_time->tm_mon + 1;
     day = local_time->tm_mday;
 }
-void Show_Imfor(Person* head, Imfor* imfor) {
+void Show_Imfor(Person* head, Imfor* imfor) {//展示信息
     if (head == NULL || imfor == NULL) {
         printf("信息展示出现问题！\n");
         return;
@@ -42,7 +42,7 @@ void Show_Imfor(Person* head, Imfor* imfor) {
         imfor->charging_date, imfor->charging_fee);
     Person* node = head;
     while (node != NULL) {
-        printf("姓名：%s 年龄：%d 性别：%s 电话号：%lld\n", node->M_name, node->M_age, node->M_sex, node->M_phone_num);
+        printf("姓名：%-8s 年龄：%-3d 性别：%-8s 电话号：%-13lld 工作：%-8s 住址：%-3d楼\n", node->M_name, node->M_age, node->M_sex, node->M_phone_num,node->Career,node->M_area);
         node = node->next;
     }
 }
@@ -84,7 +84,7 @@ Person* Init_Person(Person* person) {//初始化人
     person->next = NULL;
     return person;
 }
-void Save(Person* head) {
+void Save(Person* head) {//保存到文件
     FILE* fp;
     fp = fopen(FILENAME, "w");
     if (fp == NULL) {
@@ -252,7 +252,7 @@ void Imfor_Read() {//读文件
     }
     fclose(fp);
 }
-Person* ADD_TO_LIST(Person* head, Person* person) {
+Person* ADD_TO_LIST(Person* head, Person* person) {//链表节点添加
     if (person == NULL) {
         printf("系统错误！\n");
         return head;
@@ -405,7 +405,7 @@ Person* Delimfor(Person* head) {//删除人员
     printf("找不到对象！\n");
     return head;
 }
-Person* Mod_Person(Person* person) {
+Person* Mod_Person(Person* person) {//更改人员
     Person* new_person = (Person*)malloc(sizeof(Person));
     new_person = Init_Person(new_person);
     *new_person = *person;
@@ -732,16 +732,18 @@ void FindPerson() {//查询人员信息
             if (strcmp(node->M_name, find_name) == 0) {
                 printf("姓名：%s 年龄:%d 性别：%s 电话号：%lld 住址：%d 工作：%s 停车位占用:%d\n",
                     node->M_name, node->M_age, node->M_sex, node->M_phone_num, node->M_area, node->Career, node->parking_imfor);
-                printf("工作区域：");
-                for (int i = 0; i < node->Area_count; i++) {
-                    if (i == 0) {
-                        printf("%d", node->Area[i]);
+                if (strcmp(node->Career, "业主") != 0) {
+                    printf("工作区域：");
+                    for (int i = 0; i < node->Area_count; i++) {
+                        if (i == 0) {
+                            printf("%d", node->Area[i]);
+                        }
+                        else {
+                            printf(" %d", node->Area[i]);
+                        }
                     }
-                    else {
-                        printf(" %d", node->Area[i]);
-                    }
+                    printf("楼\n");
                 }
-                printf("楼\n");
                 printf("缴费记录：");
                 if (node->Count_charge == 0) {
                     printf("无缴费记录\n");
@@ -774,16 +776,18 @@ void FindPerson() {//查询人员信息
             if (node->M_phone_num == find_phonenum) {
                 printf("姓名：%s 年龄:%d 性别：%s 电话号：%lld 住址：%d 工作：%s 停车位占用:%d\n",
                     node->M_name, node->M_age, node->M_sex, node->M_phone_num, node->M_area, node->Career, node->parking_imfor);
-                printf("工作区域：");
-                for (int i = 0; i < node->Area_count; i++) {
-                    if (i == 0) {
-                        printf("%d", node->Area[i]);
+                if (strcmp(node->Career, "业主") != 0) {
+                    printf("工作区域：");
+                    for (int i = 0; i < node->Area_count; i++) {
+                        if (i == 0) {
+                            printf("%d", node->Area[i]);
+                        }
+                        else {
+                            printf(" %d", node->Area[i]);
+                        }
                     }
-                    else {
-                        printf(" %d", node->Area[i]);
-                    }
+                    printf("楼\n");
                 }
-                printf("楼\n");
                 printf("缴费记录：");
                 if (node->Count_charge == 0) {
                     printf("无缴费记录\n");
@@ -808,7 +812,7 @@ void FindPerson() {//查询人员信息
         break;
     }
 }
-void Sta_Imfor(Person* head) {
+void Sta_Imfor(Person* head) {//统计人员信息
     if (head == NULL) {
         printf("无法统计！\n");
         return;
@@ -820,67 +824,67 @@ void Sta_Imfor(Person* head) {
     scanf("%d", &choice);
     switch (choice) {
     case 1:
-            printf("请输入你要统计的职业：\n1.业主 2.管家 3.保安 4.保洁\n");
-            char sta_career[MAX];
-            int career_choice;
-            scanf("%d", &career_choice);            
-            switch (career_choice) {
-            case 1:
-                strcpy(sta_career , "业主");
-                break;
-            case 2:
-                strcpy(sta_career, "管家");
-                break;
-            case 3:
-                strcpy(sta_career, "保安");
-                break;
-            case 4:
-                strcpy(sta_career, "保洁");
-                break;
-            default:
-                printf("输入错误！已退出\n");
-                break;
-            }
-            if (strcmp(sta_career, "业主") == 0) {
-                while (node != NULL) {
-                    if (strcmp(node->Career, sta_career) == 0) {
-                        printf("姓名：%s 年龄：%d 性别：%s 住址：%d 电话号：%lld 工作：%s\n", node->M_name, node->M_age, node->M_sex, node->M_area, node->M_phone_num, node->Career);
-                        sum++;
-                    }
-                    node = node->next;
+        printf("请输入你要统计的职业：\n1.业主 2.管家 3.保安 4.保洁\n");
+        char sta_career[MAX];
+        int career_choice;
+        scanf("%d", &career_choice);
+        switch (career_choice) {
+        case 1:
+            strcpy(sta_career, "业主");
+            break;
+        case 2:
+            strcpy(sta_career, "管家");
+            break;
+        case 3:
+            strcpy(sta_career, "保安");
+            break;
+        case 4:
+            strcpy(sta_career, "保洁");
+            break;
+        default:
+            printf("输入错误！已退出\n");
+            break;
+        }
+        if (strcmp(sta_career, "业主") == 0) {
+            while (node != NULL) {
+                if (strcmp(node->Career, sta_career) == 0) {
+                    printf("姓名：%s 年龄：%d 性别：%s 住址：%d 电话号：%lld 工作：%s\n", node->M_name, node->M_age, node->M_sex, node->M_area, node->M_phone_num, node->Career);
+                    sum++;
                 }
-                printf("统计结束，共%d人\n", sum);
+                node = node->next;
             }
-            if (strcmp(sta_career, "管家") == 0) {
-                while (node != NULL) {
-                    if (strcmp(node->Career, sta_career) == 0) {
-                        printf("姓名：%s 年龄：%d 性别：%s 住址：%d 电话号：%lld 工作：%s\n", node->M_name, node->M_age, node->M_sex, node->M_area, node->M_phone_num, node->Career);
-                        sum++;
-                    }
-                    node = node->next;
+            printf("统计结束，共%d人\n", sum);
+        }
+        if (strcmp(sta_career, "管家") == 0) {
+            while (node != NULL) {
+                if (strcmp(node->Career, sta_career) == 0) {
+                    printf("姓名：%s 年龄：%d 性别：%s 住址：%d 电话号：%lld 工作：%s\n", node->M_name, node->M_age, node->M_sex, node->M_area, node->M_phone_num, node->Career);
+                    sum++;
                 }
-                printf("统计结束，共%d人\n", sum);
+                node = node->next;
             }
-            if (strcmp(sta_career, "保安") == 0) {
-                while (node != NULL) {
-                    if (strcmp(node->Career, sta_career) == 0) {
-                        printf("姓名：%s 年龄：%d 性别：%s 住址：%d 电话号：%lld 工作：%s\n", node->M_name, node->M_age, node->M_sex, node->M_area, node->M_phone_num, node->Career);
-                        sum++;
-                    }
-                    node = node->next;
+            printf("统计结束，共%d人\n", sum);
+        }
+        if (strcmp(sta_career, "保安") == 0) {
+            while (node != NULL) {
+                if (strcmp(node->Career, sta_career) == 0) {
+                    printf("姓名：%s 年龄：%d 性别：%s 住址：%d 电话号：%lld 工作：%s\n", node->M_name, node->M_age, node->M_sex, node->M_area, node->M_phone_num, node->Career);
+                    sum++;
                 }
-                printf("统计结束，共%d人\n", sum);
+                node = node->next;
             }
-            if (strcmp(sta_career, "保洁") == 0) {
-                while (node != NULL) {
-                    if (strcmp(node->Career, sta_career) == 0) {
-                        printf("姓名：%s 年龄：%d 性别：%s 住址：%d 电话号：%lld 工作：%s\n", node->M_name, node->M_age, node->M_sex, node->M_area, node->M_phone_num, node->Career);
-                        sum++;
-                    }
-                    node = node->next;
+            printf("统计结束，共%d人\n", sum);
+        }
+        if (strcmp(sta_career, "保洁") == 0) {
+            while (node != NULL) {
+                if (strcmp(node->Career, sta_career) == 0) {
+                    printf("姓名：%s 年龄：%d 性别：%s 住址：%d 电话号：%lld 工作：%s\n", node->M_name, node->M_age, node->M_sex, node->M_area, node->M_phone_num, node->Career);
+                    sum++;
                 }
-                printf("统计结束，共%d人\n", sum);
+                node = node->next;
             }
+            printf("统计结束，共%d人\n", sum);
+        }
         break;
     case 2:
         printf("请输入查找年龄的下限:\n");
@@ -895,7 +899,7 @@ void Sta_Imfor(Person* head) {
         }
         while (node != NULL) {
             if (node->M_age >= min_age && node->M_age <= max_age) {
-                printf("姓名：%s 年龄：%d 性别：%s 住址：%d 电话号：%lld 工作：%s\n", node->M_name, node->M_age, node->M_sex, node->M_area ,node->M_phone_num, node->Career);
+                printf("姓名：%s 年龄：%d 性别：%s 住址：%d 电话号：%lld 工作：%s\n", node->M_name, node->M_age, node->M_sex, node->M_area, node->M_phone_num, node->Career);
                 sum++;
             }
             node = node->next;
@@ -978,7 +982,7 @@ void Sta_Imfor(Person* head) {
     }
     return;
 }
-void maintain_password(Person* head) {
+void maintain_password(Person* head) {//密码维护
     Person* node = head;
     while (node != NULL) {
         printf("姓名：%s 电话：%lld 密码：%lld\n", node->M_name, node->M_phone_num, node->password);
@@ -1065,10 +1069,10 @@ void Generate() {//生成账单(新增）
     }
     Person* node = head;
     while (node != NULL) {
-        if (strcmp(node->Career, "业主") == 0&&node->Count_charge!=0) {
+        if (strcmp(node->Career, "业主") == 0 && node->Count_charge != 0) {
             fprintf(fp, "业主:%s\n", node->M_name);
-            for (int i = node->Count_charge; i >=1; i--) {
-                fprintf(fp,"缴费次数:%d 时间：%d/%d/%d\n", i, node->Date_charge[i][0], node->Date_charge[i][1], node->Date_charge[i][2]);
+            for (int i = node->Count_charge; i >= 1; i--) {
+                fprintf(fp, "缴费次数:%d 时间：%d/%d/%d\n", i, node->Date_charge[i][0], node->Date_charge[i][1], node->Date_charge[i][2]);
             }
         }
         node = node->next;
@@ -1076,7 +1080,7 @@ void Generate() {//生成账单(新增）
     printf("生成账单到本地成功！\n");
     fclose(fp);
 }
-Person* Sort_Person(Person* head) {
+Person* Sort_Person(Person* head) {//排序
     int node_count = 0;
     Person* node = head;
     Person* array[MAX];
@@ -1238,4 +1242,56 @@ Person* Sort_Person(Person* head) {
     Save(head);
     printf("排序成功！请回到主菜单按1查看结果\n");
     return head;
+}
+void Backup(Imfor* imfor,Person* head){
+    FILE *fp;
+    fp=fopen(BACKFILENAME,"w");
+    if(imfor==NULL){
+        printf("备份服务信息失败！\n");
+    }
+    fprintf(fp,"收费信息：\n收费周期：%d月 收费金额：%d元\n",imfor->charging_date,imfor->charging_fee);
+    fprintf(fp,"楼宇数目：%d\n",imfor->Num_Building);
+    int unuse=0;
+    for(int i=0;i<imfor->Num_parking;i++){
+        if(imfor->parking[i]==-1){
+            unuse++;
+        }
+    }
+    fprintf(fp,"停车位信息：\n停车位总数:%d\n 不可用个数:%d\n人员信息:\n",imfor->Num_parking,unuse);
+    Person* node=head;
+    if(head==NULL){
+        printf("备份人员信息失败！\n");
+    }
+    while(node!=NULL){
+        fprintf(fp,"姓名：%s 年龄：%d 性别：%s 住址：%d 电话号：%lld 工作：%s 密码：%lld\n", node->M_name, node->M_age, node->M_sex, node->M_area, node->M_phone_num, node->Career
+        ,node->password);
+        if(strcmp(node->Career,"业主")!=0){
+            fprintf(fp,"工作区域：\n");
+            for (int i = 0; i < node->Area_count; i++) {
+                if (i == 0) {
+                    fprintf(fp,"%d", node->Area[i]);
+                }
+                else {
+                    fprintf(fp," %d", node->Area[i]);
+                }
+            }
+            fprintf(fp,"楼\n");
+        }
+        fprintf(fp,"缴费记录：\n");
+        if (node->Count_charge == 0) {
+            fprintf(fp,"无缴费记录\n");
+        }
+        else if (strcmp(node->Career, "业主") != 0) {
+            fprintf(fp,"服务人员无需缴费\n");
+        }
+        else {
+            for (int i = 1; i < node->Count_charge; i++) {
+                fprintf(fp,"第%d次，%d年%d月%d日", i, node->Date_charge[i][0], node->Date_charge[i][1], node->Date_charge[i][2]);
+            }
+            fprintf(fp,"\n");
+        }
+        node=node->next;
+    }
+    printf("备份成功!\n");
+    fclose(fp);
 }

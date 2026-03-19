@@ -5,6 +5,7 @@
 #define MAX 1000
 #define FILENAME "Manager.txt"
 #define BILL "Bill.txt"
+#define BACKFILENAME "Backup.txt"
 #define MANAGER_PASSWORD 20251354
 typedef struct Imformation Imfor;
 typedef struct Person Person;
@@ -37,14 +38,13 @@ struct Imformation {//无机物信息
 };
 void Authorize();//授权
 void Get_time();//获取时间
-void Show_Imfor(Person* head, Imfor* imfor);
+void Show_Imfor(Person* head, Imfor* imfor);//展示信息
 void Save(Person* head);//存入文件
 void Imfor_Read();//读取文件中的imfor信息
-void AddImfor();//添加人员信xi
+void AddImfor();//添加人员信息
 void FindPerson();//查询人员信息
 void Sta_Imfor(Person* head);//统计人员信息
 void maintain_password(Person* head);//密码维护
-void Generate();//生成账单
 Imfor* Init_imfor(Imfor* imfor); //初始化imfor对象
 Person* Init_Person(Person* person);//初始化人
 Person* ADD_TO_LIST(Person* head, Person* person);//加入链表
@@ -52,3 +52,5 @@ Person* Delimfor(Person* head);//从链表中删除对象
 Person* ModImfor(Person* head, Imfor* imfor);//更改信息
 Person* Mod_Person(Person* person);//更改人员
 Person* Sort_Person(Person* head);//排序
+void Generate();//生成账单(新增）
+void Backup(Imfor* imfor,Person* head);//备份数据到本地
