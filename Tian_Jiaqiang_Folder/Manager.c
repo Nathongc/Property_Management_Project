@@ -1243,3 +1243,55 @@ Person* Sort_Person(Person* head) {//排序
     printf("排序成功！请回到主菜单按1查看结果\n");
     return head;
 }
+void Backup(Imfor* imfor,Person* head){
+    FILE *fp;
+    fp=fopen(BACKFILENAME,"w");
+    if(imfor==NULL){
+        printf("备份服务信息失败！\n");
+    }
+    fprintf(fp,"收费信息：\n收费周期：%d月 收费金额：%d元\n",imfor->charging_date,imfor->charging_fee);
+    fprintf(fp,"楼宇数目：%d\n",imfor->Num_Building);
+    int unuse=0;
+    for(int i=0;i<imfor->Num_parking;i++){
+        if(imfor->parking[i]==-1){
+            unuse++;
+        }
+    }
+    fprintf(fp,"停车位信息：\n停车位总数:%d\n 不可用个数:%d\n人员信息:\n",imfor->Num_parking,unuse);
+    Person* node=head;
+    if(head==NULL){
+        printf("备份人员信息失败！\n");
+    }
+    while(node!=NULL){
+        fprintf(fp,"姓名：%s 年龄：%d 性别：%s 住址：%d 电话号：%lld 工作：%s 密码：%lld\n", node->M_name, node->M_age, node->M_sex, node->M_area, node->M_phone_num, node->Career
+        ,node->password);
+        if(strcmp(node->Career,"业主")!=0){
+            fprintf(fp,"工作区域：\n");
+            for (int i = 0; i < node->Area_count; i++) {
+                if (i == 0) {
+                    fprintf(fp,"%d", node->Area[i]);
+                }
+                else {
+                    fprintf(fp," %d", node->Area[i]);
+                }
+            }
+            fprintf(fp,"楼\n");
+        }
+        fprintf(fp,"缴费记录：\n");
+        if (node->Count_charge == 0) {
+            fprintf(fp,"无缴费记录\n");
+        }
+        else if (strcmp(node->Career, "业主") != 0) {
+            fprintf(fp,"服务人员无需缴费\n");
+        }
+        else {
+            for (int i = 1; i < node->Count_charge; i++) {
+                fprintf(fp,"第%d次，%d年%d月%d日", i, node->Date_charge[i][0], node->Date_charge[i][1], node->Date_charge[i][2]);
+            }
+            fprintf(fp,"\n");
+        }
+        node=node->next;
+    }
+    printf("备份成功!\n");
+    fclose(fp);
+}

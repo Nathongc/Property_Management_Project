@@ -5,6 +5,7 @@
 #define MAX 1000
 #define FILENAME "Manager.txt"
 #define BILL "Bill.txt"
+#define BACKFILENAME "Backup.txt"
 #define MANAGER_PASSWORD 20251354
 typedef struct Imformation Imfor;
 typedef struct Person Person;
@@ -52,3 +53,4 @@ Person* ModImfor(Person* head, Imfor* imfor);//更改信息
 Person* Mod_Person(Person* person);//更改人员
 Person* Sort_Person(Person* head);//排序
 void Generate();//生成账单(新增）
+void Backup(Imfor* imfor,Person* head);//备份数据到本地
