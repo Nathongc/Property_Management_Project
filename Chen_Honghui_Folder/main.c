@@ -23,6 +23,9 @@ void show_my_records(int staff_id);
 void change_password(int index,char* new_password);
 void query_my_area(int index);
 void query_owner_by_name(char* name);
+void query_all_payment(int owner_id);
+void query_payment_by_year(int owner_id, int year);
+void query_unpaid_by_year(int year, int index);
 void statistics_by_year(int year,int index);
 int statistics_by_area(char* area,int index);
 int statistics_by_year_and_area(int year,char* area,int index);
@@ -422,14 +425,36 @@ void mine(int index,int id){
             break;
             case 4:{
                 char new_password[9];
-                printf("请输入新密码:");
-                while(getchar()!='\n'){
+                int is_too_long=0;
+                int cycle_count=0;
+                while(1){
+                    is_too_long=0;
+                    printf("请输入8位的新密码(超过8位自动取前8位):");
+                    if(!cycle_count){
+                        while(getchar()!='\n'){
 
-                }
-                fgets(new_password,9,stdin);
-                int len=strlen(new_password);
-                if(len>0&&new_password[len-1]=='\n'){
-                    new_password[len-1]='\0';
+                        }
+                    }
+                    cycle_count++;
+                    fgets(new_password,9,stdin);
+                    int len=strlen(new_password);
+                    if(len>0&&new_password[len-1]=='\n'){
+                        new_password[len-1]='\0';
+                    }else{
+                        is_too_long=1;
+                        while(getchar()!='\n'){
+
+                        }
+                    }
+                    len=strlen(new_password);
+                    if(len==8){
+                        if(is_too_long){
+                            printf("提示:已自动截取前8位作为您的新密码!\n");
+                        }
+                        break;
+                    }else{
+                        printf("密码长度不正确!\n");
+                    }
                 }
                 change_password(index,new_password);
                 break;
@@ -447,7 +472,10 @@ void show_query_menu(){
     printf("******************************\n");
     printf("********信息查询       ********\n");
     printf("********1.我的负责区域  ********\n");
-    printf("********2.业主缴费信息  ********\n");
+    printf("********2.按姓名查业主  ********\n");
+    printf("********3.查业主所有缴费********\n");
+    printf("********4.查业主某年缴费********\n");
+    printf("********5.查某年未缴费业主********\n");
     printf("********0.返回菜单     ********\n");
     printf("******************************\n");
 }
@@ -460,14 +488,12 @@ void query(int index,int id){
         scanf("%d",&choice);
         switch(choice){
             case 1:
-            query_my_area(index);
-            break;
+                query_my_area(index);
+                break;
             case 2:{
                 char name[20]={0};
-                printf("请输入业主姓名:");
-                while(getchar()!='\n'){
-                    
-                }
+                printf("请输入业主姓名(支持模糊查询):");
+                while(getchar()!='\n');
                 fgets(name,20,stdin);
                 int len=strlen(name);
                 if(len>0&&name[len-1]=='\n'){
@@ -476,11 +502,34 @@ void query(int index,int id){
                 query_owner_by_name(name);
                 break;
             }
+            case 3:{
+                int owner_id;
+                printf("请输入业主ID:");
+                scanf("%d",&owner_id);
+                query_all_payment(owner_id);
+                break;
+            }
+            case 4:{
+                int owner_id, year;
+                printf("请输入业主ID:");
+                scanf("%d",&owner_id);
+                printf("请输入年份:");
+                scanf("%d",&year);
+                query_payment_by_year(owner_id, year);
+                break;
+            }
+            case 5:{
+                int year;
+                printf("请输入年份:");
+                scanf("%d",&year);
+                query_unpaid_by_year(year, index);
+                break;
+            }
             case 0:
-            printf("返回菜单...\n");
-            return;
+                printf("返回菜单...\n");
+                return;
             default:
-            printf("输入错误!\n");
+                printf("输入错误!\n");
         }
     }
 }
@@ -488,8 +537,135 @@ void query(int index,int id){
 void show_sort_menu(){
     printf("******************************\n");
     printf("********信息排序       ********\n");
+    printf("********1.按姓名升序排序********\n");
+    printf("********2.按姓名降序排序********\n");
+    printf("********3.按ID升序排序  ********\n");
+    printf("********4.按ID降序排序  ********\n");
+    printf("********5.按欠费数量排序********\n");
+    printf("********6.多属性组合排序********\n");
     printf("********0.返回菜单     ********\n");
     printf("******************************\n");
+}
+
+int get_unpaidcount(struct Owner* o){
+    int count=0;
+    for(int i=0;i<o->payment_count;i++){
+        if(o->pr[i].payment_status==0){
+            count++;
+        }
+    }
+    return count;
+}
+
+int ascend_sort_by_name(const void* a,const void* b){
+    struct Owner* o1=(struct Owner*)a;
+    struct Owner* o2=(struct Owner*)b;
+    return strcmp(o1->name,o2->name);
+}
+
+int descend_sort_by_name(const void* a,const void* b){
+    struct Owner* o1=(struct Owner*)a;
+    struct Owner* o2=(struct Owner*)b;
+    return strcmp(o2->name,o1->name);
+}
+
+int ascend_sort_by_id(const void* a,const void* b){
+    struct Owner* o1=(struct Owner*)a;
+    struct Owner* o2=(struct Owner*)b;
+    return o1->id-o2->id;
+}
+
+int descend_sort_by_id(const void* a,const void* b){
+    struct Owner* o1=(struct Owner*)a;
+    struct Owner* o2=(struct Owner*)b;
+    return o2->id-o1->id;
+}
+
+int descend_sort_by_unpaidcount(const void* a,const void* b){
+    struct Owner* o1=(struct Owner*)a;
+    struct Owner* o2=(struct Owner*)b;
+    int count1=get_unpaidcount(o1);
+    int count2=get_unpaidcount(o2);
+    return count2-count1;
+}
+
+int multi_sort(const void* a,const void* b){
+    struct Owner* o1=(struct Owner*)a;
+    struct Owner* o2=(struct Owner*)b;
+    int has_unpaid1=get_unpaidcount(o1)>0?1:0;
+    int has_unpaid2=get_unpaidcount(o2)>0?1:0;
+    if(has_unpaid1!=has_unpaid2){
+        return has_unpaid2-has_unpaid1;
+    }
+    return strcmp(o1->name,o2->name);
+}
+
+void sort(int index){
+    int i=0;
+    struct Staff* mine=NULL;
+    for(StaffNode* p=staff_head;p!=NULL;p=p->next){
+        if(i==index){
+            mine=&p->data;
+            break;
+        }
+        i++;
+    }
+    if(mine==NULL) return;
+    char* my_area=mine->area;
+    static struct Owner owner_arr[MAX_OWNER];
+    int owner_num=0;
+    for(OwnerNode* p=owner_head;p!=NULL;p=p->next){
+        if(strstr(p->data.address,my_area)!=NULL){
+            owner_arr[owner_num++]=p->data;
+            if(owner_num>=MAX_OWNER) break;
+        }
+    }
+    if(owner_num==0){
+        printf("您的区域暂无业主，无法排序!\n");
+        return;
+    }
+    int choice;
+    while(1){
+        show_sort_menu();
+        printf("请选择:");
+        scanf("%d",&choice);
+        switch(choice){
+            case 1:
+            qsort(owner_arr,owner_num,sizeof(struct Owner),ascend_sort_by_name);
+            break;
+            case 2:
+            qsort(owner_arr,owner_num,sizeof(struct Owner),descend_sort_by_name);
+            break;
+            case 3:
+            qsort(owner_arr,owner_num,sizeof(struct Owner),ascend_sort_by_id);
+            break;
+            case 4:
+            qsort(owner_arr,owner_num,sizeof(struct Owner),descend_sort_by_id);
+            break;
+            case 5:
+            qsort(owner_arr,owner_num,sizeof(struct Owner),descend_sort_by_unpaidcount);
+            break;
+            case 6:
+            qsort(owner_arr,owner_num,sizeof(struct Owner),multi_sort);
+            break;
+            case 0:
+            printf("返回菜单...\n");
+            return;
+            default:
+            printf("输入错误!\n");
+            continue;
+        }
+        printf("已排序，结果如下:\n");
+        for(int j=0;j<owner_num;j++){
+            int unpaid_num=get_unpaidcount(&owner_arr[j]);
+            printf("%d.姓名:%s\tID:%d\t地址:%s\t未缴费记录:%d条\n",
+                    j+1,
+                    owner_arr[j].name,
+                    owner_arr[j].id,
+                    owner_arr[j].address,
+                    unpaid_num);
+        }
+    }
 }
 
 void show_statistics_menu(){
@@ -528,12 +704,16 @@ void statistics(int index,int id){
                         }
                         case 2:{
                             int inside_flag=1;
+                            int cycle_count=0;
                             while(inside_flag){
                                 printf("请输入目标区域:");
                                 char target_area[50]={0};
-                                while(getchar()!='\n'){
+                                if(!cycle_count){
+                                    while(getchar()!='\n'){
 
+                                    }
                                 }
+                                cycle_count++;
                                 fgets(target_area,50,stdin);
                                 int len=strlen(target_area);
                                 if(len>0&&target_area[len-1]=='\n'){
@@ -725,6 +905,10 @@ void show_my_records(int staff_id){
 
 //修改密码
 void change_password(int index,char* new_password){
+    if(strlen(new_password)!=8){
+        printf("密码修改失败，请确保密码为8位\n");
+        return;
+    }
     int i=0;
     for(StaffNode* p=staff_head;p!=NULL;p=p->next){
         if(i==index){
@@ -1093,7 +1277,7 @@ int main()
             query(index,id);
             break;
             case 3:
-
+            sort(index);
             break;
             case 4:
             statistics(index,id);
