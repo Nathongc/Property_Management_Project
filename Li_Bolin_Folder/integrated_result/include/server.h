@@ -9,7 +9,9 @@ int statistics_by_area(char* area,int index);
 int statistics_by_year_and_area(int year,char* area,int index);
 void statistics_2026_unpaid(int index);
 void statistics_year_condition(int index);
-void perform_sorting();
+void query_all_payment(int owner_id);
+void query_payment_by_year(int owner_id, int year);
+void query_unpaid_by_year(int year, int index);
 
 //物业服务人员系统
 void server_system();
