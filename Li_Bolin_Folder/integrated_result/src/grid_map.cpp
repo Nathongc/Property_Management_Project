@@ -148,12 +148,12 @@ void grid_map::handle_mouse_event(int event,int x,int y){
             start_exist = true;
             start_x = click_grid_x;
             start_y = click_grid_y;
-            cv::rectangle(final_image,cv::Rect(click_grid_x*prolong*block_size,click_grid_y*prolong*block_size,prolong*block_size,prolong*block_size),cv::Scalar(0,255,0),cv::FILLED);
+            cv::rectangle(final_image,cv::Rect(click_grid_x*prolong*block_size,click_grid_y*prolong*block_size,prolong*block_size*2,prolong*block_size*2),cv::Scalar(0,255,0),cv::FILLED);
         }else if(event == cv::EVENT_RBUTTONDOWN && goal_exist == false){
             goal_exist = true;
             goal_x = click_grid_x;
             goal_y = click_grid_y;
-            cv::rectangle(final_image,cv::Rect(click_grid_x*prolong*block_size,click_grid_y*prolong*block_size,prolong*block_size,prolong*block_size),cv::Scalar(255,0,0),cv::FILLED);
+            cv::rectangle(final_image,cv::Rect(click_grid_x*prolong*block_size,click_grid_y*prolong*block_size,prolong*block_size*2,prolong*block_size*2),cv::Scalar(255,0,0),cv::FILLED);
         }
     }
     if(start_exist == true && goal_exist == true && report_count == 0){
@@ -183,10 +183,10 @@ void grid_map::handle_mouse_event(int event,int x,int y){
         final_path = ms.main_process();
         //绘制minimum snap处理后的轨迹
         for(const auto & p : final_path){
-            cv::rectangle(final_image,cv::Rect(p.first*prolong*block_size/mapping,p.second*prolong*block_size/mapping,prolong*block_size,prolong*block_size),cv::Scalar(0,0,255),cv::FILLED);
+            cv::rectangle(final_image,cv::Rect(p.first*prolong*block_size/mapping,p.second*prolong*block_size/mapping,prolong*block_size*2,prolong*block_size*2),cv::Scalar(0,0,255),cv::FILLED);
         };
-        cv::rectangle(final_image,cv::Rect(start_x*prolong*block_size,start_y*prolong*block_size,prolong*block_size,prolong*block_size),cv::Scalar(0,255,0),cv::FILLED);
-        cv::rectangle(final_image,cv::Rect(goal_x*prolong*block_size,goal_y*prolong*block_size,prolong*block_size,prolong*block_size),cv::Scalar(255,0,0),cv::FILLED);
+        cv::rectangle(final_image,cv::Rect(start_x*prolong*block_size,start_y*prolong*block_size,prolong*block_size*2,prolong*block_size*2),cv::Scalar(0,255,0),cv::FILLED);
+        cv::rectangle(final_image,cv::Rect(goal_x*prolong*block_size,goal_y*prolong*block_size,prolong*block_size*2,prolong*block_size*2),cv::Scalar(255,0,0),cv::FILLED);
     }
 }
 
