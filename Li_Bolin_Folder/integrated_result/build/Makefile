@@ -129,101 +129,173 @@ final_result/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/build
 .PHONY : final_result/fast
 
-src/main.o: src/main.c.o
+src/grid_map.o: src/grid_map.cpp.o
+.PHONY : src/grid_map.o
+
+# target to build an object file
+src/grid_map.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/grid_map.cpp.o
+.PHONY : src/grid_map.cpp.o
+
+src/grid_map.i: src/grid_map.cpp.i
+.PHONY : src/grid_map.i
+
+# target to preprocess a source file
+src/grid_map.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/grid_map.cpp.i
+.PHONY : src/grid_map.cpp.i
+
+src/grid_map.s: src/grid_map.cpp.s
+.PHONY : src/grid_map.s
+
+# target to generate assembly for a file
+src/grid_map.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/grid_map.cpp.s
+.PHONY : src/grid_map.cpp.s
+
+src/lastar.o: src/lastar.cpp.o
+.PHONY : src/lastar.o
+
+# target to build an object file
+src/lastar.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/lastar.cpp.o
+.PHONY : src/lastar.cpp.o
+
+src/lastar.i: src/lastar.cpp.i
+.PHONY : src/lastar.i
+
+# target to preprocess a source file
+src/lastar.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/lastar.cpp.i
+.PHONY : src/lastar.cpp.i
+
+src/lastar.s: src/lastar.cpp.s
+.PHONY : src/lastar.s
+
+# target to generate assembly for a file
+src/lastar.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/lastar.cpp.s
+.PHONY : src/lastar.cpp.s
+
+src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
 # target to build an object file
-src/main.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/main.c.o
-.PHONY : src/main.c.o
+src/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/main.cpp.o
+.PHONY : src/main.cpp.o
 
-src/main.i: src/main.c.i
+src/main.i: src/main.cpp.i
 .PHONY : src/main.i
 
 # target to preprocess a source file
-src/main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/main.c.i
-.PHONY : src/main.c.i
+src/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/main.cpp.i
+.PHONY : src/main.cpp.i
 
-src/main.s: src/main.c.s
+src/main.s: src/main.cpp.s
 .PHONY : src/main.s
 
 # target to generate assembly for a file
-src/main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/main.c.s
-.PHONY : src/main.c.s
+src/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/main.cpp.s
+.PHONY : src/main.cpp.s
 
-src/manager.o: src/manager.c.o
+src/manager.o: src/manager.cpp.o
 .PHONY : src/manager.o
 
 # target to build an object file
-src/manager.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/manager.c.o
-.PHONY : src/manager.c.o
+src/manager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/manager.cpp.o
+.PHONY : src/manager.cpp.o
 
-src/manager.i: src/manager.c.i
+src/manager.i: src/manager.cpp.i
 .PHONY : src/manager.i
 
 # target to preprocess a source file
-src/manager.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/manager.c.i
-.PHONY : src/manager.c.i
+src/manager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/manager.cpp.i
+.PHONY : src/manager.cpp.i
 
-src/manager.s: src/manager.c.s
+src/manager.s: src/manager.cpp.s
 .PHONY : src/manager.s
 
 # target to generate assembly for a file
-src/manager.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/manager.c.s
-.PHONY : src/manager.c.s
+src/manager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/manager.cpp.s
+.PHONY : src/manager.cpp.s
 
-src/owner.o: src/owner.c.o
+src/minisnap.o: src/minisnap.cpp.o
+.PHONY : src/minisnap.o
+
+# target to build an object file
+src/minisnap.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/minisnap.cpp.o
+.PHONY : src/minisnap.cpp.o
+
+src/minisnap.i: src/minisnap.cpp.i
+.PHONY : src/minisnap.i
+
+# target to preprocess a source file
+src/minisnap.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/minisnap.cpp.i
+.PHONY : src/minisnap.cpp.i
+
+src/minisnap.s: src/minisnap.cpp.s
+.PHONY : src/minisnap.s
+
+# target to generate assembly for a file
+src/minisnap.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/minisnap.cpp.s
+.PHONY : src/minisnap.cpp.s
+
+src/owner.o: src/owner.cpp.o
 .PHONY : src/owner.o
 
 # target to build an object file
-src/owner.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/owner.c.o
-.PHONY : src/owner.c.o
+src/owner.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/owner.cpp.o
+.PHONY : src/owner.cpp.o
 
-src/owner.i: src/owner.c.i
+src/owner.i: src/owner.cpp.i
 .PHONY : src/owner.i
 
 # target to preprocess a source file
-src/owner.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/owner.c.i
-.PHONY : src/owner.c.i
+src/owner.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/owner.cpp.i
+.PHONY : src/owner.cpp.i
 
-src/owner.s: src/owner.c.s
+src/owner.s: src/owner.cpp.s
 .PHONY : src/owner.s
 
 # target to generate assembly for a file
-src/owner.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/owner.c.s
-.PHONY : src/owner.c.s
+src/owner.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/owner.cpp.s
+.PHONY : src/owner.cpp.s
 
-src/server.o: src/server.c.o
+src/server.o: src/server.cpp.o
 .PHONY : src/server.o
 
 # target to build an object file
-src/server.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/server.c.o
-.PHONY : src/server.c.o
+src/server.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/server.cpp.o
+.PHONY : src/server.cpp.o
 
-src/server.i: src/server.c.i
+src/server.i: src/server.cpp.i
 .PHONY : src/server.i
 
 # target to preprocess a source file
-src/server.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/server.c.i
-.PHONY : src/server.c.i
+src/server.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/server.cpp.i
+.PHONY : src/server.cpp.i
 
-src/server.s: src/server.c.s
+src/server.s: src/server.cpp.s
 .PHONY : src/server.s
 
 # target to generate assembly for a file
-src/server.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/server.c.s
-.PHONY : src/server.c.s
+src/server.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/final_result.dir/build.make CMakeFiles/final_result.dir/src/server.cpp.s
+.PHONY : src/server.cpp.s
 
 # Help Target
 help:
@@ -234,12 +306,21 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... final_result"
+	@echo "... src/grid_map.o"
+	@echo "... src/grid_map.i"
+	@echo "... src/grid_map.s"
+	@echo "... src/lastar.o"
+	@echo "... src/lastar.i"
+	@echo "... src/lastar.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
 	@echo "... src/manager.o"
 	@echo "... src/manager.i"
 	@echo "... src/manager.s"
+	@echo "... src/minisnap.o"
+	@echo "... src/minisnap.i"
+	@echo "... src/minisnap.s"
 	@echo "... src/owner.o"
 	@echo "... src/owner.i"
 	@echo "... src/owner.s"

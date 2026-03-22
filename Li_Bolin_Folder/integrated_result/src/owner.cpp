@@ -1,6 +1,6 @@
 #include "../include/owner.h" // 假设头文件路径正确
 
-// 定义属于 owner.c 模块的独立全局变量，名称已修改以避免链接冲突
+// 定义属于 owner.c 模块的独立全局变量
 yezhu* owner_head123 = NULL;
 yezhu* owner_prear123 = NULL;
 fee* owner_head1123 = NULL;
@@ -1483,7 +1483,7 @@ void tongjimenu() // 6.统计页面
     }
 }
 
-// --- 新增：排序菜单 ---
+// 排序菜单
 void paixuMenu() {
     int choice_type = 0;
     int choice_order = 0;
@@ -1532,7 +1532,7 @@ void paixuMenu() {
     printf("排序完成。\n");
 }
 
-// --- 新增：辅助比较函数 (按账单日期升序) ---
+// 按账单日期升序
 int compareFeeDateAsc(const void *a, const void *b) {
     fee* fa = *(fee**)a;
     fee* fb = *(fee**)b;
@@ -1549,13 +1549,13 @@ int compareFeeDateAsc(const void *a, const void *b) {
     return date_a[2] - date_b[2];
 }
 
-// --- 新增：辅助比较函数 (按账单日期降序) ---
+// 按账单日期降序
 int compareFeeDateDesc(const void *a, const void *b) {
     // 复用升序逻辑，但返回相反值
     return -compareFeeDateAsc(a, b);
 }
 
-// --- 新增：辅助比较函数 (按金额升序) ---
+// 按金额升序
 int compareFeeAmountAsc(const void *a, const void *b) {
     fee* fa = *(fee**)a;
     fee* fb = *(fee**)b;
@@ -1566,33 +1566,33 @@ int compareFeeAmountAsc(const void *a, const void *b) {
     return amount_a - amount_b;
 }
 
-// --- 新增：辅助比较函数 (按金额降序) ---
+// 按金额降序
 int compareFeeAmountDesc(const void *a, const void *b) {
     // 复用升序逻辑，但返回相反值
     return -compareFeeAmountAsc(a, b);
 }
 
-// --- 新增：按账单日期升序排序 ---
+// 按账单日期升序排序
 void sortFeesByDateAsc() {
     sortFeesWithComparator(compareFeeDateAsc);
 }
 
-// --- 新增：按账单日期降序排序 ---
+// 按账单日期降序排序
 void sortFeesByDateDesc() {
     sortFeesWithComparator(compareFeeDateDesc);
 }
 
-// --- 新增：按金额升序排序 ---
+// 按金额升序排序
 void sortFeesByAmountAsc() {
     sortFeesWithComparator(compareFeeAmountAsc);
 }
 
-// --- 新增：按金额降序排序 ---
+// 按金额降序排序
 void sortFeesByAmountDesc() {
     sortFeesWithComparator(compareFeeAmountDesc);
 }
 
-// --- 新增：通用排序逻辑 ---
+// 通用排序逻辑
 void sortFeesWithComparator(int (*comparator)(const void *, const void *)) {
     // 1. 遍历主链表，找出当前用户的所有缴费记录，并存入动态数组
     fee* current_fee = owner_head1123->next1; // 从第一个有效节点开始

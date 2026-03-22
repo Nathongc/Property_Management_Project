@@ -1359,7 +1359,7 @@ void server_system(){
             break;
         case 0:
             printf("退出成功，感谢您的使用!\n");
-            return 0;
+            return;
         default:
             printf("输入错误!\n");
         }
@@ -1386,10 +1386,10 @@ void server_system(){
             save_all_text();
             free_all();
             printf("退出成功，感谢您的使用!\n");
-            return 0;
+            return;
         default:
             printf("输入错误!\n");
         }
     }
-    return 0;
+    return;
 }

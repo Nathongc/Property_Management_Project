@@ -1,9 +1,9 @@
 #include "../include/manager.h"
 Imfor* imfor = NULL;
 Person* head = NULL;
-year = 0;
-month = 0;
-day = 0;
+int year = 0;
+int month = 0;
+int day = 0;
 
 int Authorize() {
     printf("请输入管理员ID:\n");
@@ -55,7 +55,7 @@ void Show_Imfor(Person* head, Imfor* imfor) {
 }
 Imfor* Init_imfor(Imfor* imfor) {//初始化imfor对象
     if (imfor == NULL) {
-        imfor = malloc(sizeof(Imfor));
+        imfor = (Imfor*)malloc(sizeof(Imfor));
         if (imfor == NULL) {
             printf("异常！\n");
             return imfor;
@@ -170,7 +170,7 @@ void Imfor_Read() {//读文件
     }
     imfor->Num_parking = parking_count;
     if (imfor == NULL) { // 如果全局imfor没初始化，先分配内存
-        imfor = malloc(sizeof(Imfor));
+        imfor = (Imfor*)malloc(sizeof(Imfor));
         if (imfor == NULL) {
             printf("全局imfor内存分配失败！\n");
             fclose(fp);
@@ -420,24 +420,27 @@ Person* Mod_Person(Person* person) {
     int mod_Person_choice;
     scanf("%d", &mod_Person_choice);
     switch (mod_Person_choice) {
-    case 1:
+    case 1:{
         printf("请输入新名称：\n");
         char newname[MAX];
         scanf("%s", newname);
         strcpy(new_person->M_name, newname);
         break;
-    case 2:
+    }
+    case 2:{
         printf("请输入年龄：\n");
         int newage;
         scanf("%d", &newage);
         new_person->M_age = newage;
         break;
-    case 3:
+    }
+    case 3:{
         printf("请输入电话号：\n");
         long long newphonenumber;
         scanf("%lld", &newphonenumber);
         new_person->M_phone_num = newphonenumber;
         break;
+    }
     case 4:
     {
         char newcareer[MAX];
@@ -465,13 +468,14 @@ Person* Mod_Person(Person* person) {
         strcpy(new_person->Career, newcareer);
         break;
     }
-    case 5:
+    case 5:{
         printf("请输入家庭住址：\n");
         int newarea;
         scanf("%d", &newarea);
         new_person->M_area = newarea;
         break;
-    case 6:
+    }
+    case 6:{
         if (strcmp(person->Career, "业主") == 0) {
             printf("业主无工作区域！\n");
             break;
@@ -492,6 +496,7 @@ Person* Mod_Person(Person* person) {
             new_person->Area_count = M_count;
         }
         break;
+    }
     default:
         break;
     }
@@ -503,7 +508,7 @@ Person* ModImfor(Person* head, Imfor* imfor) {//更改信息
     int choice;
     scanf("%d", &choice);
     switch (choice) {
-    case 1:
+    case 1:{
         printf("请输入你要更改的人员姓名：\n");
         char mod_person[MAX];
         scanf("%s", mod_person);
@@ -575,7 +580,8 @@ Person* ModImfor(Person* head, Imfor* imfor) {//更改信息
         }
         printf("找不到对象！\n");
         break;
-    case 2:
+    }
+    case 2:{
         printf("请输入你要更改的服务信息：\n1.停车位 2.收费细则 3.楼房数目\n");
         int serve_choice;
         scanf("%d", &serve_choice);
@@ -654,7 +660,7 @@ Person* ModImfor(Person* head, Imfor* imfor) {//更改信息
             scanf("%d", &charge_choice);
             switch (charge_choice)
             {
-            case 1:
+            case 1:{
                 printf("请输入新的收费周期：\n");
                 int new_charge_date;
                 scanf("%d", &new_charge_date);
@@ -667,7 +673,8 @@ Person* ModImfor(Person* head, Imfor* imfor) {//更改信息
                 }
                 printf("修改成功！\n");
                 break;
-            case 2:
+            }
+            case 2:{
                 printf("请输入新的单次收费金额：\n");
                 int new_charge_fee;
                 scanf("%d", &new_charge_fee);
@@ -680,12 +687,13 @@ Person* ModImfor(Person* head, Imfor* imfor) {//更改信息
                 }
                 printf("修改成功！\n");
                 break;
+            }
             default:
                 printf("输入错误，已退出\n");
                 break;
             }
             break;
-        case 3:
+        case 3:{
             printf("当前楼宇数目：%d\n请输入更改数据(增加的楼宇数目)：\n", imfor->Num_Building);
             int mod_building;
             scanf("%d", &mod_building);
@@ -710,10 +718,12 @@ Person* ModImfor(Person* head, Imfor* imfor) {//更改信息
                 break;
             }
             break;
+        }
         default:
             break;
         }
         break;
+    }
     default:
         printf("输入错误！已退出\n");
         break;
@@ -726,7 +736,7 @@ void FindPerson() {//查询人员信息
     int choice;
     scanf("%d", &choice);
     switch (choice) {
-    case 1:
+    case 1:{
         printf("请输入ta的姓名:\n");
         char find_name[MAX];
         scanf("%s", find_name);
@@ -767,6 +777,7 @@ void FindPerson() {//查询人员信息
         }
         printf("找不到对象！\n");
         break;
+    }
     case 2:
     {
         printf("请输入ta的电话号码：\n");

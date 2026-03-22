@@ -101,4 +101,17 @@ void nianfenqian(void);
 void jineda(void);
 void jinexiao(void);
 
+void paixuMenu();
+
+void sortFeesByDateAsc();
+void sortFeesByDateDesc();
+void sortFeesByAmountAsc();
+void sortFeesByAmountDesc();
+void sortFeesWithComparator(int (*cmp)(const void*, const void*));
+
+int compareFeeDateAsc(const void* a, const void* b);
+int compareFeeDateDesc(const void* a, const void* b);
+int compareFeeAmountAsc(const void* a, const void* b);
+int compareFeeAmountDesc(const void* a, const void* b);
+
 #endif // OWNER_H

@@ -69,79 +69,144 @@ include CMakeFiles/final_result.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/final_result.dir/flags.make
 
-CMakeFiles/final_result.dir/src/main.c.o: CMakeFiles/final_result.dir/flags.make
-CMakeFiles/final_result.dir/src/main.c.o: ../src/main.c
-CMakeFiles/final_result.dir/src/main.c.o: CMakeFiles/final_result.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/final_result.dir/src/main.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/final_result.dir/src/main.c.o -MF CMakeFiles/final_result.dir/src/main.c.o.d -o CMakeFiles/final_result.dir/src/main.c.o -c /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/main.c
+CMakeFiles/final_result.dir/src/main.cpp.o: CMakeFiles/final_result.dir/flags.make
+CMakeFiles/final_result.dir/src/main.cpp.o: ../src/main.cpp
+CMakeFiles/final_result.dir/src/main.cpp.o: CMakeFiles/final_result.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/final_result.dir/src/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/final_result.dir/src/main.cpp.o -MF CMakeFiles/final_result.dir/src/main.cpp.o.d -o CMakeFiles/final_result.dir/src/main.cpp.o -c /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/main.cpp
 
-CMakeFiles/final_result.dir/src/main.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/final_result.dir/src/main.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/main.c > CMakeFiles/final_result.dir/src/main.c.i
+CMakeFiles/final_result.dir/src/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/final_result.dir/src/main.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/main.cpp > CMakeFiles/final_result.dir/src/main.cpp.i
 
-CMakeFiles/final_result.dir/src/main.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/final_result.dir/src/main.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/main.c -o CMakeFiles/final_result.dir/src/main.c.s
+CMakeFiles/final_result.dir/src/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/final_result.dir/src/main.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/main.cpp -o CMakeFiles/final_result.dir/src/main.cpp.s
 
-CMakeFiles/final_result.dir/src/manager.c.o: CMakeFiles/final_result.dir/flags.make
-CMakeFiles/final_result.dir/src/manager.c.o: ../src/manager.c
-CMakeFiles/final_result.dir/src/manager.c.o: CMakeFiles/final_result.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/final_result.dir/src/manager.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/final_result.dir/src/manager.c.o -MF CMakeFiles/final_result.dir/src/manager.c.o.d -o CMakeFiles/final_result.dir/src/manager.c.o -c /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/manager.c
+CMakeFiles/final_result.dir/src/manager.cpp.o: CMakeFiles/final_result.dir/flags.make
+CMakeFiles/final_result.dir/src/manager.cpp.o: ../src/manager.cpp
+CMakeFiles/final_result.dir/src/manager.cpp.o: CMakeFiles/final_result.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/final_result.dir/src/manager.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/final_result.dir/src/manager.cpp.o -MF CMakeFiles/final_result.dir/src/manager.cpp.o.d -o CMakeFiles/final_result.dir/src/manager.cpp.o -c /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/manager.cpp
 
-CMakeFiles/final_result.dir/src/manager.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/final_result.dir/src/manager.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/manager.c > CMakeFiles/final_result.dir/src/manager.c.i
+CMakeFiles/final_result.dir/src/manager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/final_result.dir/src/manager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/manager.cpp > CMakeFiles/final_result.dir/src/manager.cpp.i
 
-CMakeFiles/final_result.dir/src/manager.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/final_result.dir/src/manager.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/manager.c -o CMakeFiles/final_result.dir/src/manager.c.s
+CMakeFiles/final_result.dir/src/manager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/final_result.dir/src/manager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/manager.cpp -o CMakeFiles/final_result.dir/src/manager.cpp.s
 
-CMakeFiles/final_result.dir/src/server.c.o: CMakeFiles/final_result.dir/flags.make
-CMakeFiles/final_result.dir/src/server.c.o: ../src/server.c
-CMakeFiles/final_result.dir/src/server.c.o: CMakeFiles/final_result.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/final_result.dir/src/server.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/final_result.dir/src/server.c.o -MF CMakeFiles/final_result.dir/src/server.c.o.d -o CMakeFiles/final_result.dir/src/server.c.o -c /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/server.c
+CMakeFiles/final_result.dir/src/server.cpp.o: CMakeFiles/final_result.dir/flags.make
+CMakeFiles/final_result.dir/src/server.cpp.o: ../src/server.cpp
+CMakeFiles/final_result.dir/src/server.cpp.o: CMakeFiles/final_result.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/final_result.dir/src/server.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/final_result.dir/src/server.cpp.o -MF CMakeFiles/final_result.dir/src/server.cpp.o.d -o CMakeFiles/final_result.dir/src/server.cpp.o -c /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/server.cpp
 
-CMakeFiles/final_result.dir/src/server.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/final_result.dir/src/server.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/server.c > CMakeFiles/final_result.dir/src/server.c.i
+CMakeFiles/final_result.dir/src/server.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/final_result.dir/src/server.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/server.cpp > CMakeFiles/final_result.dir/src/server.cpp.i
 
-CMakeFiles/final_result.dir/src/server.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/final_result.dir/src/server.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/server.c -o CMakeFiles/final_result.dir/src/server.c.s
+CMakeFiles/final_result.dir/src/server.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/final_result.dir/src/server.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/server.cpp -o CMakeFiles/final_result.dir/src/server.cpp.s
 
-CMakeFiles/final_result.dir/src/owner.c.o: CMakeFiles/final_result.dir/flags.make
-CMakeFiles/final_result.dir/src/owner.c.o: ../src/owner.c
-CMakeFiles/final_result.dir/src/owner.c.o: CMakeFiles/final_result.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/final_result.dir/src/owner.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/final_result.dir/src/owner.c.o -MF CMakeFiles/final_result.dir/src/owner.c.o.d -o CMakeFiles/final_result.dir/src/owner.c.o -c /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/owner.c
+CMakeFiles/final_result.dir/src/owner.cpp.o: CMakeFiles/final_result.dir/flags.make
+CMakeFiles/final_result.dir/src/owner.cpp.o: ../src/owner.cpp
+CMakeFiles/final_result.dir/src/owner.cpp.o: CMakeFiles/final_result.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/final_result.dir/src/owner.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/final_result.dir/src/owner.cpp.o -MF CMakeFiles/final_result.dir/src/owner.cpp.o.d -o CMakeFiles/final_result.dir/src/owner.cpp.o -c /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/owner.cpp
 
-CMakeFiles/final_result.dir/src/owner.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/final_result.dir/src/owner.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/owner.c > CMakeFiles/final_result.dir/src/owner.c.i
+CMakeFiles/final_result.dir/src/owner.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/final_result.dir/src/owner.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/owner.cpp > CMakeFiles/final_result.dir/src/owner.cpp.i
 
-CMakeFiles/final_result.dir/src/owner.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/final_result.dir/src/owner.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/owner.c -o CMakeFiles/final_result.dir/src/owner.c.s
+CMakeFiles/final_result.dir/src/owner.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/final_result.dir/src/owner.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/owner.cpp -o CMakeFiles/final_result.dir/src/owner.cpp.s
+
+CMakeFiles/final_result.dir/src/grid_map.cpp.o: CMakeFiles/final_result.dir/flags.make
+CMakeFiles/final_result.dir/src/grid_map.cpp.o: ../src/grid_map.cpp
+CMakeFiles/final_result.dir/src/grid_map.cpp.o: CMakeFiles/final_result.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/final_result.dir/src/grid_map.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/final_result.dir/src/grid_map.cpp.o -MF CMakeFiles/final_result.dir/src/grid_map.cpp.o.d -o CMakeFiles/final_result.dir/src/grid_map.cpp.o -c /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/grid_map.cpp
+
+CMakeFiles/final_result.dir/src/grid_map.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/final_result.dir/src/grid_map.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/grid_map.cpp > CMakeFiles/final_result.dir/src/grid_map.cpp.i
+
+CMakeFiles/final_result.dir/src/grid_map.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/final_result.dir/src/grid_map.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/grid_map.cpp -o CMakeFiles/final_result.dir/src/grid_map.cpp.s
+
+CMakeFiles/final_result.dir/src/lastar.cpp.o: CMakeFiles/final_result.dir/flags.make
+CMakeFiles/final_result.dir/src/lastar.cpp.o: ../src/lastar.cpp
+CMakeFiles/final_result.dir/src/lastar.cpp.o: CMakeFiles/final_result.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/final_result.dir/src/lastar.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/final_result.dir/src/lastar.cpp.o -MF CMakeFiles/final_result.dir/src/lastar.cpp.o.d -o CMakeFiles/final_result.dir/src/lastar.cpp.o -c /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/lastar.cpp
+
+CMakeFiles/final_result.dir/src/lastar.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/final_result.dir/src/lastar.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/lastar.cpp > CMakeFiles/final_result.dir/src/lastar.cpp.i
+
+CMakeFiles/final_result.dir/src/lastar.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/final_result.dir/src/lastar.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/lastar.cpp -o CMakeFiles/final_result.dir/src/lastar.cpp.s
+
+CMakeFiles/final_result.dir/src/minisnap.cpp.o: CMakeFiles/final_result.dir/flags.make
+CMakeFiles/final_result.dir/src/minisnap.cpp.o: ../src/minisnap.cpp
+CMakeFiles/final_result.dir/src/minisnap.cpp.o: CMakeFiles/final_result.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/final_result.dir/src/minisnap.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/final_result.dir/src/minisnap.cpp.o -MF CMakeFiles/final_result.dir/src/minisnap.cpp.o.d -o CMakeFiles/final_result.dir/src/minisnap.cpp.o -c /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/minisnap.cpp
+
+CMakeFiles/final_result.dir/src/minisnap.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/final_result.dir/src/minisnap.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/minisnap.cpp > CMakeFiles/final_result.dir/src/minisnap.cpp.i
+
+CMakeFiles/final_result.dir/src/minisnap.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/final_result.dir/src/minisnap.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/src/minisnap.cpp -o CMakeFiles/final_result.dir/src/minisnap.cpp.s
 
 # Object files for target final_result
 final_result_OBJECTS = \
-"CMakeFiles/final_result.dir/src/main.c.o" \
-"CMakeFiles/final_result.dir/src/manager.c.o" \
-"CMakeFiles/final_result.dir/src/server.c.o" \
-"CMakeFiles/final_result.dir/src/owner.c.o"
+"CMakeFiles/final_result.dir/src/main.cpp.o" \
+"CMakeFiles/final_result.dir/src/manager.cpp.o" \
+"CMakeFiles/final_result.dir/src/server.cpp.o" \
+"CMakeFiles/final_result.dir/src/owner.cpp.o" \
+"CMakeFiles/final_result.dir/src/grid_map.cpp.o" \
+"CMakeFiles/final_result.dir/src/lastar.cpp.o" \
+"CMakeFiles/final_result.dir/src/minisnap.cpp.o"
 
 # External object files for target final_result
 final_result_EXTERNAL_OBJECTS =
 
-final_result: CMakeFiles/final_result.dir/src/main.c.o
-final_result: CMakeFiles/final_result.dir/src/manager.c.o
-final_result: CMakeFiles/final_result.dir/src/server.c.o
-final_result: CMakeFiles/final_result.dir/src/owner.c.o
+final_result: CMakeFiles/final_result.dir/src/main.cpp.o
+final_result: CMakeFiles/final_result.dir/src/manager.cpp.o
+final_result: CMakeFiles/final_result.dir/src/server.cpp.o
+final_result: CMakeFiles/final_result.dir/src/owner.cpp.o
+final_result: CMakeFiles/final_result.dir/src/grid_map.cpp.o
+final_result: CMakeFiles/final_result.dir/src/lastar.cpp.o
+final_result: CMakeFiles/final_result.dir/src/minisnap.cpp.o
 final_result: CMakeFiles/final_result.dir/build.make
+final_result: /usr/local/lib/libopencv_gapi.so.4.7.0
+final_result: /usr/local/lib/libopencv_highgui.so.4.7.0
+final_result: /usr/local/lib/libopencv_ml.so.4.7.0
+final_result: /usr/local/lib/libopencv_objdetect.so.4.7.0
+final_result: /usr/local/lib/libopencv_photo.so.4.7.0
+final_result: /usr/local/lib/libopencv_stitching.so.4.7.0
+final_result: /usr/local/lib/libopencv_video.so.4.7.0
+final_result: /usr/local/lib/libopencv_videoio.so.4.7.0
+final_result: /usr/local/lib/libOsqpEigen.so.0.11.0
+final_result: /usr/local/lib/libopencv_imgcodecs.so.4.7.0
+final_result: /usr/local/lib/libopencv_dnn.so.4.7.0
+final_result: /usr/local/lib/libopencv_calib3d.so.4.7.0
+final_result: /usr/local/lib/libopencv_features2d.so.4.7.0
+final_result: /usr/local/lib/libopencv_flann.so.4.7.0
+final_result: /usr/local/lib/libopencv_imgproc.so.4.7.0
+final_result: /usr/local/lib/libopencv_core.so.4.7.0
+final_result: /usr/local/lib/libosqp.so
 final_result: CMakeFiles/final_result.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C executable final_result"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/libolin/Navigation/Property_Management_Project/Li_Bolin_Folder/integrated_result/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable final_result"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/final_result.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
